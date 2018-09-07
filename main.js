@@ -27,7 +27,10 @@ function createBoard(rows, columns)  //all int type.
         Array[i]= new Array(columns);
         for(var j = 0; i<columns; i++)
         {
-            Array[i][j] = new Tile(i,j); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
+            Array[i][j] = new Tile(i, j); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
+
+                                          //It should be:
+                                          //= new Tile(false, 0, false, false);
         }
     }
     return Array
@@ -108,7 +111,7 @@ function clickReveal(Array, Game, i, j, counter)
                 {
                      clickReveal(Array, Game, i, (j - 1));
                 }
-                    //Right block check.
+                //Right block check.
                 else if (Array[i][(j + 1)].adjNum == 0)
                 {
                      clickReveal(Array, Game, i, (j + 1));
@@ -127,6 +130,171 @@ function clickReveal(Array, Game, i, j, counter)
                 else if (Array[(i + 1)][(j + 1)].adjNum == 0)
                 {
                       clickReveal(Array, Game, (i + 1), (j + 1));
+                }
+            }
+            //check speical left column without two corner blocks
+            else if ((i - 1) > 0 && (i + 1) < Array.length && j == 0)
+            {
+                //Upper block check.
+                if (Array[(i - 1)][j].adjNum == 0)
+                {
+                    clickReveal(Array, Game, (i - 1), j);
+                }
+                //Upper right block check.
+                else if (Array[(i - 1)][(j + 1)].adjNum == 0)
+                {
+                    clickReveal(Array, Game, (i - 1), (j + 1));
+                }
+                //Right block check.
+                else if (Array[i][(j + 1)].adjNum == 0)
+                {
+                    clickReveal(Array, Game, i, (j + 1));
+                }
+                //Lower block check.
+                else if (Array[(i + 1)][j].adjNum == 0)
+                {
+                    clickReveal(Array, Game, (i + 1), j);
+                }
+                //Lower right block check.
+                else if (Array[(i + 1)][(j + 1)].adjNum == 0)
+                {
+                    clickReveal(Array, Game, (i + 1), (j + 1));
+                }
+            }
+            //check speical Lower row
+            else if (i == Array.length && (j - 1) > 0 && (j + 1) < Array[i].length)
+            {
+                //Upper left block check.
+                if (Array[(i - 1)][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), (j - 1));
+                }
+                    //Upper block check.
+                else if (Array[(i - 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), j);
+                }
+                    //Upper right block check.
+                else if (Array[(i - 1)][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), (j + 1));
+                }
+                    //left block check.
+                else if (Array[i][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j - 1));
+                }
+                    //Right block check.
+                else if (Array[i][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j + 1));
+                }
+            }
+            //check speical right column
+            else if ((i - 1) > 0 && (i + 1) < Array.length && j == Array[i].length)
+            {
+                //Upper left block check.
+                if (Array[(i - 1)][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), (j - 1));
+                }
+                    //Upper block check.
+                else if (Array[(i - 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), j);
+                }
+                    //left block check.
+                else if (Array[i][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j - 1));
+                }
+                    //Lower left block check.
+                else if (Array[(i + 1)][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), (j - 1));
+                }
+                    //Lower block check.
+                else if (Array[(i + 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), j);
+                }
+            }
+            //check speical Upper row
+            else if (i == 0 && (j - 1) > 0 && (j + 1) < Array[i].length)
+            {
+                    //left block check.
+                if (Array[i][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j - 1));
+                }
+                    //Right block check.
+                else if (Array[i][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j + 1));
+                }
+                    //Lower left block check.
+                else if (Array[(i + 1)][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), (j - 1));
+                }
+                    //Lower block check.
+                else if (Array[(i + 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), j);
+                }
+                    //Lower right block check.
+                else if (Array[(i + 1)][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), (j + 1));
+                }
+            }
+            //Upper left corner
+            else if (i == 0 && j == 0)
+            {
+                    //Right block check.
+                if (Array[i][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j + 1));
+                }
+                    //Lower block check.
+                else if (Array[(i + 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), j);
+                }
+                    //Lower right block check.
+                else if (Array[(i + 1)][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), (j + 1));
+                }
+            }
+            //Upper right corner
+            else if (i == 0 && j == Array[i].length)
+            {
+                    //left block check.
+                if (Array[i][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j - 1));
+                }
+                    //Lower left block check.
+                else if (Array[(i + 1)][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), (j - 1));
+                }
+                    //Lower block check.
+                else if (Array[(i + 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i + 1), j);
+                }
+            }
+            //Lower left corner
+            else if (i == Array.length && j == 0)
+            {
+                    //Upper block check.
+                if (Array[(i - 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), j);
+                }
+                    //Upper right block check.
+                else if (Array[(i - 1)][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), (j + 1));
+                }
+                    //Right block check.
+                else if (Array[i][(j + 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j + 1));
+                }
+            }
+            //Lower right corner
+            else if (i == Array.length && j == Array[i].length)
+            {
+                //Upper left block check.
+                if (Array[(i - 1)][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), (j - 1));
+                }
+                    //Upper block check.
+                else if (Array[(i - 1)][j].adjNum == 0) {
+                    clickReveal(Array, Game, (i - 1), j);
+                }
+                    //left block check.
+                else if (Array[i][(j - 1)].adjNum == 0) {
+                    clickReveal(Array, Game, i, (j - 1));
                 }
             }
         }
