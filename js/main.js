@@ -295,6 +295,21 @@ function clickReveal(Array, Game, i, j)
                     clickReveal(Array, Game, i, (j - 1));
                 }
             }
-        }
+        }length
     }
+}
+
+function checkMinesInput() {
+	'use strict';
+	let lengthField = document.getElementById("boardLength");
+	let heightField = document.getElementById("boardHeight");
+	let minesField = document.getElementById("minesInput");
+
+	if (lengthField.validity.valid == true && heightField.validity.valid == true) {
+		minesField.max = (lengthField.value * heightField.value) - 1;
+		minesField.readOnly = false;
+	}
+	else {
+		minesField.readOnly = true;
+	}
 }
