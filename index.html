@@ -16,8 +16,16 @@
 	</head>
 
 	<body>
+
+		<noscript>
+			<div class="alert alert-danger" role="alert">
+				You don't have Javascript enabled? What the heck is wrong with you?! Please enable Javascript to play Minesweeper!
+			</div>
+		</noscript>
 		<!--[if lte IE 9]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+			<div class="alert alert-warning" role="alert">
+				Yo, what are you doing with this old, <strong>outdated</strong> browser? I know Minesweeper is old, but it's not THAT old! Please consider <a href="https://browsehappy.com/">upgrading your browser!</a>
+			</div>
 		<![endif]-->
 
 		<div class="container">
@@ -34,20 +42,20 @@
 				<div class="row align-items-end">
 					<div class="col-sm-6 col-md-4">
 						<div class="form-group">
-							<label for="boardSize">Board length (between 2 and 50):</label>
-							<input type="number" class="form-control" id="boardLength" min="2" max="50" required>
+							<label for="boardLength"><strong>Board length (between 2 and 50):</strong></label>
+							<input type="number" class="form-control" id="boardLength" min="2" max="50" required onchange="checkMinesInput()">
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4">
 						<div class="form-group">
-							<label for="boardSize">Board height (between 2 and 50):</label>
-							<input type="number" class="form-control" id="boardLength" min="2" max="50" required>
+							<label for="boardHeight"><strong>Board height (between 2 and 50):</strong></label>
+							<input type="number" class="form-control" id="boardHeight" min="2" max="50" required onchange="checkMinesInput()">
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4">
 						<div class="form-group">
-							<label for="boardSize">Number of mines:</label>
-							<input type="number" class="form-control" id="boardLength" min="1" max="2500" required>
+							<label for="minesInput"><strong>Number of mines:</strong></label>
+							<input type="number" class="form-control" id="minesInput" min="1" max="2500" required readonly>
 						</div>
 					</div>
 				</div>
