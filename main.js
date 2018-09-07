@@ -27,7 +27,7 @@ function createBoard(rows, columns)  //all int type.
         Array[i]= new Array(columns);
         for(var j = 0; i<columns; i++)
         {
-            Array[i][j] = new Tile(i,j); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
+            Array[i][j] = new Tile(false, 0,false,false); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
         }
     }
     return Array
