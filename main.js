@@ -1,6 +1,12 @@
 //Date: 09/06/2018
 //Version 1, Author: Jielong Cong
 
+//Date: 09/07/2018
+//Version 2, Author: Jason Purinton
+
+//Date: 09/07/2018
+//Version 3, Author: Jielong Cong
+
 
 
 //An Object Constructor of Tile, the element inside a board.
@@ -68,16 +74,11 @@ function setFlag(Array, row, column)
 //It will execute any one of block on the block been clicked.
 //It will change all the tile's revealed = true, who have number 0.
 //Even the tile set with flagged.
-//parameter:  Array, Game, row(i), column(j), counter.
+//parameter:  Array, Game, row(i), column(j).
 
-//This counter help to figure it was click by player or it revealed auto.
-//If the counter is equal to 0, it means it was click by player.
-//If the counter is bigger than 0, it means it was auto click.
-//need to define in the main function and make it equal to 0 after each click event.
-
-function clickReveal(Array, Game, i, j, counter)
+function clickReveal(Array, Game, i, j)
 {
-    if (Array[i][j].isMine == true && counter == 0)
+    if (Array[i][j].isMine == true)
     {
         Array[i][j].revealed = true;
                 Game.isLose = true;             //If the click by player and it was a bomb, the game is over.
