@@ -22,11 +22,36 @@
 
 		<div class="container">
 			<h1>Minesweeper!</h1>
+			<h2>How to Play</h2>
+			<p>The objective of the game is to clear the field of mines without setting any off. To begin, select the size of the field and the number of mines in the field, and click "Start." To examine a section of the field, click on it, and it will reveal one of three things:</p>
+			<ol>
+				<li>A number, indicating the number of mines adjacent to the tile.</li>
+				<li>A blank tile, indicating there are no mines adjacent to the tile, which will also reveal any adjacent tiles that are not mines.</li>
+				<li>A mine, indicating KABOOM! You're dead, game over!</li>
+			</ol>
+			<p>Flags can be used to mark spots where mines are believed to be. To place a flag, right click on an unrevealed tile. Flag all of the mines without flagging any non-mines to win the game!
 			<form>
-				<div class="form-group">
-					<label for="boardSize">Select your board size (between 2 and 250)</label>
-					<input type="number" class="form-control" id="boardSize" min="2" max="250">
+				<div class="row align-items-end">
+					<div class="col-sm-6 col-md-4">
+						<div class="form-group">
+							<label for="boardSize">Board length (between 2 and 50):</label>
+							<input type="number" class="form-control" id="boardLength" min="2" max="50" required>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<div class="form-group">
+							<label for="boardSize">Board height (between 2 and 50):</label>
+							<input type="number" class="form-control" id="boardLength" min="2" max="50" required>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-4">
+						<div class="form-group">
+							<label for="boardSize">Number of mines:</label>
+							<input type="number" class="form-control" id="boardLength" min="1" max="2500" required>
+						</div>
+					</div>
 				</div>
+				<button type="button submit" class="btn btn-primary btn-lg btn-block">Start</button>
 			</form>
 		</div>
 
