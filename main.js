@@ -54,24 +54,70 @@ function setFlag(Array, row, column)
 
 //The is a recursive function. 
 //It will execute any one of block on the block been clicked. 
-//It will return a Array which change the tile's revealed.
-//parameter:  Array, Game, row, column
-function clickReveal(Array, Game, row, column)
+//It will change all the tile's revealed = true, who have number 0. 
+//Even the tile set with flagged.
+//parameter:  Array, Game, row(i), column(j), counter.
+
+//This counter help to figure it was click by player or it revealed auto.
+//If the counter is equal to 0, it means it was click by player.
+//If the counter is bigger than 0, it means it was auto click.
+//need to define in the main function and make it equal to 0 after each click event.
+
+function clickReveal(Array, Game, i, j, counter)
 {
-    for (var i = 0; i < Array.length; i++)
+    if (Array[i][j].isMine == true && counter == 0)
     {
-        var temp = Array[i];
-        for (var j = 0; j < temp.length; j++)
+        Array[i][j].revealed = true;
+                Game.isLose = true;             //If the click by player and it was a bombo, the game is over.
+    }
+    else
+    {
+        if (Array[i][j].revealed == false)
         {
-            if (temp[j].isMine == true) {
-                Game.isLose = true;
-                break;                          //need debug is that stop this function or not.
-            }
-            else
+            Array[i][j].revealed = true;
+            Array[i][j].flagged = false;
+
+            if ((i - 1) > 0 && (j - 1) > 0 && (i + 1) < Array.length && (j + 1) < Array[i].length)
             {
-                if (temp[j].revealed == false)
+                //Upper left block check.
+                if (Array[(i - 1)][(j - 1)].adjNum == 0)
                 {
-                    temp[j].revealed == true;
+                    clickReveal(Array, Game, (i - 1), (j - 1));
+                }
+                //Upper block check.
+                else if (Array[(i - 1)][j].adjNum == 0) 
+                {
+                    clickReveal(Array, Game, (i - 1), j);
+                }
+                //Upper right block check.
+                else if (Array[(i - 1)][(j + 1)].adjNum == 0)
+                {
+                     clickReveal(Array, Game, (i - 1), (j + 1));
+                }
+                //left block check.
+                else if (Array[i][(j - 1)].adjNum == 0)
+                {
+                     clickReveal(Array, Game, i, (j - 1));
+                }
+                    //Right block check.
+                else if (Array[i][(j + 1)].adjNum == 0)
+                {
+                     clickReveal(Array, Game, i, (j + 1));
+                }
+                //Lower left block check.
+                else if (Array[(i + 1)][(j - 1)].adjNum == 0) 
+                {
+                      clickReveal(Array, Game, (i + 1), (j - 1));
+                }
+                //Lower block check.
+                else if (Array[(i + 1)][j].adjNum == 0) 
+                {
+                      clickReveal(Array, Game, (i + 1), j);
+                }
+                //Lower right block check.
+                else if (Array[(i + 1)][(j + 1)].adjNum == 0) 
+                {
+                      clickReveal(Array, Game, (i + 1), (j + 1));
                 }
             }
         }
