@@ -21,11 +21,20 @@ var Game = {isWin: false, isLose: false};
 //Parameter: rows, columns.
 function createBoard(rows, columns)  //all int type.
 {
-
+    var Array = new Array(rows); //Fixed size 2d array from user input parameters
+    for(var i = 0; i<rows; i++)
+    {
+        Array[i]= new Array(columns);
+        for(var j = 0; i<columns; i++)
+        {
+            Array[i][j] = new Tile(i,j); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
+        }
+    }
+    return Array
 }
 
 
-//This function plant the Mines inside the Array. 
+//This function plant the Mines inside the Array.
 //The Number of Mines are given by player.
 //Using Math.random() to ramdomly plant the Mines.
 //parameter: Array, number of Mine.
@@ -36,7 +45,7 @@ function plantMine(Array, MineNums)
 
 
 
-//This function change each tile's adjNum. 
+//This function change each tile's adjNum.
 //parameter: Array.
 function plantAdjNum(Array)
 {
@@ -52,9 +61,9 @@ function setFlag(Array, row, column)
 }
 
 
-//The is a recursive function. 
-//It will execute any one of block on the block been clicked. 
-//It will change all the tile's revealed = true, who have number 0. 
+//The is a recursive function.
+//It will execute any one of block on the block been clicked.
+//It will change all the tile's revealed = true, who have number 0.
 //Even the tile set with flagged.
 //parameter:  Array, Game, row(i), column(j), counter.
 
@@ -68,7 +77,7 @@ function clickReveal(Array, Game, i, j, counter)
     if (Array[i][j].isMine == true && counter == 0)
     {
         Array[i][j].revealed = true;
-                Game.isLose = true;             //If the click by player and it was a bombo, the game is over.
+                Game.isLose = true;             //If the click by player and it was a bomb, the game is over.
     }
     else
     {
@@ -85,7 +94,7 @@ function clickReveal(Array, Game, i, j, counter)
                     clickReveal(Array, Game, (i - 1), (j - 1));
                 }
                 //Upper block check.
-                else if (Array[(i - 1)][j].adjNum == 0) 
+                else if (Array[(i - 1)][j].adjNum == 0)
                 {
                     clickReveal(Array, Game, (i - 1), j);
                 }
@@ -105,17 +114,17 @@ function clickReveal(Array, Game, i, j, counter)
                      clickReveal(Array, Game, i, (j + 1));
                 }
                 //Lower left block check.
-                else if (Array[(i + 1)][(j - 1)].adjNum == 0) 
+                else if (Array[(i + 1)][(j - 1)].adjNum == 0)
                 {
                       clickReveal(Array, Game, (i + 1), (j - 1));
                 }
                 //Lower block check.
-                else if (Array[(i + 1)][j].adjNum == 0) 
+                else if (Array[(i + 1)][j].adjNum == 0)
                 {
                       clickReveal(Array, Game, (i + 1), j);
                 }
                 //Lower right block check.
-                else if (Array[(i + 1)][(j + 1)].adjNum == 0) 
+                else if (Array[(i + 1)][(j + 1)].adjNum == 0)
                 {
                       clickReveal(Array, Game, (i + 1), (j + 1));
                 }
