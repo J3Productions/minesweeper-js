@@ -19,6 +19,23 @@ function Tile(isMine, adjNum, flagged, revealed)
 }
 
 
+
+function checkMinesInput() {
+    'use strict';
+    let lengthField = document.getElementById("boardLength");
+    let heightField = document.getElementById("boardHeight");
+    let minesField = document.getElementById("minesInput");
+
+    if (lengthField.validity.valid == true && heightField.validity.valid == true) {
+        minesField.max = (lengthField.value * heightField.value) - 1;
+        minesField.readOnly = false;
+    }
+    else {
+        minesField.readOnly = true;
+    }
+}
+
+
 //An Object that record the status of the game.
 var Game = {isWin: false, isLose: false};
 
@@ -437,37 +454,12 @@ function clickReveal(Array, Game, i, j) {
                     }
                 }
             }
-<<<<<<< HEAD
-        }length
-    }
-}
-
-function checkMinesInput() {
-	'use strict';
-	let lengthField = document.getElementById("boardLength");
-	let heightField = document.getElementById("boardHeight");
-	let minesField = document.getElementById("minesInput");
-
-	if (lengthField.validity.valid == true && heightField.validity.valid == true) {
-		minesField.max = (lengthField.value * heightField.value) - 1;
-		minesField.readOnly = false;
-	}
-	else {
-		minesField.readOnly = true;
-	}
-}
-=======
         }
-
     }
 }
-
 
 //This function show all mines, even the game is win or lose.
 function showAllMine()
 {
     
 }
-
-
->>>>>>> clickReveal
