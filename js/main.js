@@ -33,7 +33,7 @@ function createBoard(rows, columns)  //all int type.
         Array[i]= [columns];
         for(var j = 0; i<columns; i++)
         {
-            Array[i][j] = new Tile(false, 0,false,false);// Adding default tiles
+            Array[i][j] = new Tile(false, 9,false,false);// Adding default tiles
         }
     }
     return Array;
