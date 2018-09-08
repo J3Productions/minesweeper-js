@@ -27,16 +27,16 @@ var Game = {isWin: false, isLose: false};
 //Parameter: rows, columns.
 function createBoard(rows, columns)  //all int type.
 {
-    var Array = new Array(rows); //Fixed size 2d array from user input parameters
+    var Array = [rows]; //Fixed size 2d array from user input parameters
     for(var i = 0; i<rows; i++)
     {
-        Array[i]= new Array(columns);
+        Array[i]= [columns];
         for(var j = 0; i<columns; i++)
         {
-            Array[i][j] = new Tile(false, 0,false,false); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
+            Array[i][j] = new Tile(false, 0,false,false);// Adding default tiles
         }
     }
-    return Array
+    return Array;
 }
 
 
@@ -44,9 +44,18 @@ function createBoard(rows, columns)  //all int type.
 //The Number of Mines are given by player.
 //Using Math.random() to ramdomly plant the Mines.
 //parameter: Array, number of Mine.
-function plantMine(Array, MineNums)
+function plantMine(Array, MineNums, rows, colomns)
 {
-
+    while(MineNums> 0)
+    {
+        let i= Math.floor(Math.random() * rows); // Assign random i no larger than numRows
+        let j= Math.floor(Math.random() * colomns);// Assign random j no larger than numColumns
+        if(Array[i][j].isMine== false)
+        {
+            Array[i][j].isMine= true; // Reassign mine to equal true
+            MineNums= MineNums- 1;
+        }
+    }
 }
 
 
