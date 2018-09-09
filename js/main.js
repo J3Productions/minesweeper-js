@@ -69,7 +69,7 @@ function plantAdjNum(Array)
         for (var j = 0; j < array.length; j++) {
             if (Array.isMine== false)
             {
-                let adjMine =
+                let adjMine = 
             }
         }
     }
