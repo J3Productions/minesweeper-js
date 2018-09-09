@@ -30,8 +30,8 @@ function createBoard(rows, columns)  //all int type.
     var Array = [rows]; //Fixed size 2d array from user input parameters
     for(var i = 0; i<rows; i++)
     {
-        Array[i]= [columns];
-        for(var j = 0; i<columns; i++)
+        Array[i]= [];
+        for(var j = 0; j<columns; j++)
         {
             Array[i][j] = new Tile(false, 9,false,false);// Adding default tiles
         }
@@ -64,7 +64,15 @@ function plantMine(Array, MineNums, rows, colomns)
 //parameter: Array.
 function plantAdjNum(Array)
 {
-
+    for (var i = 0; i < rows; i++)
+    {
+        for (var j = 0; j < array.length; j++) {
+            if (Array.isMine== false)
+            {
+                let adjMine =
+            }
+        }
+    }
 }
 
 
