@@ -36,7 +36,7 @@ function createBoard(numMines, rows, columns)  //all int type.
             arr[i][j] = new Tile(false, 9,false,false);// Adding default tiles
         }
     }
-    plantMine(arr, numMines, rows, columns)
+    plantMine(arr, numMines, rows, columns)//Call to plantMine which returns arr with mines planted and numMines inserted.
     return arr;
 }
 
@@ -57,6 +57,7 @@ function plantMine(arr, numMines, rows, columns)
             numMines= numMines- 1;
         }
     }
+    plantAdjNum(arr);// Call to assign adjNum in tiles
     return arr;
 }
 
