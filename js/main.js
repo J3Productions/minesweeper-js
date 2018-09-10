@@ -517,7 +517,6 @@ function clickReveal(Array, Game, i, j) {
                         Array[(i - 1)][j].flagged = false;
                     }
                     //left block check.
-<<<<<<< HEAD
                     if (Array[i][(j - 1)].adjNum == 0) {
                         clickReveal(Array, Game, i, (j - 1));
                     }
@@ -525,22 +524,16 @@ function clickReveal(Array, Game, i, j) {
                         Array[i][(j - 1)].revealed = true;
                         Array[i][(j - 1)].flagged = false;
                     }
-=======
                 else if (Array[i][(j - 1)].adjNum == 0) {
                     clickReveal(arr, Game, i, (j - 1));
->>>>>>> createBoard
                 }
             }
         }
     }
 }
-<<<<<<< HEAD
 
 //This function show all mines, even the game is win or lose.
 function showAllMine()
 {
-    
+
 }
-=======
-console.log(createBoard(2,4,4));
->>>>>>> createBoard
