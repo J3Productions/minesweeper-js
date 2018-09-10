@@ -23,122 +23,118 @@ function Tile(isMine, adjNum, flagged, revealed)
 var Game = {isWin: false, isLose: false};
 
 
-//This function create an Array, whcih size is based on user input.
+//This function create an arr, whcih size is based on user input.
 //Parameter: rows, columns.
-function createBoard(rows, columns)  //all int type.
+function createBoard(numMines, rows, columns)  //all int type.
 {
-    var Array = [rows]; //Fixed size 2d array from user input parameters
+    var arr = [rows]; //Fixed size 2d arr from user input parameters
     for(var i = 0; i<rows; i++)
     {
-        Array[i]= [];
+        arr[i]= [];
         for(var j = 0; j<columns; j++)
         {
-            Array[i][j] = new Tile(false, 9,false,false);// Adding default tiles
+            arr[i][j] = new Tile(false, 9,false,false);// Adding default tiles
         }
     }
-    return Array;
+    plantMine(arr, numMines, rows, columns)
+    return arr;
 }
 
 
-//This function plant the Mines inside the Array.
+//This function plant the Mines inside the arr.
 //The Number of Mines are given by player.
 //Using Math.random() to ramdomly plant the Mines.
-//parameter: Array, number of Mine.
-function plantMine(Array, MineNums, rows, colomns)
+//parameter: arr, number of Mine.
+function plantMine(arr, numMines, rows, columns)
 {
-    while(MineNums> 0)
+    while(numMines> 0)
     {
         let i= Math.floor(Math.random() * rows); // Assign random i no larger than numRows
-        let j= Math.floor(Math.random() * colomns);// Assign random j no larger than numColumns
-        if(Array[i][j].isMine== false)
+        let j= Math.floor(Math.random() * columns);// Assign random j no larger than numColumns
+        if(arr[i][j].isMine== false)
         {
-            Array[i][j].isMine= true; // Reassign mine to equal true
-            MineNums= MineNums- 1;
+            arr[i][j].isMine= true; // Reassign mine to equal true
+            numMines= numMines- 1;
         }
     }
-    return Array;
+    return arr;
 }
 
 
 
 //This function change each tile's adjNum.
-//parameter: Array.
-function plantAdjNum(Array)
+//parameter: arr.
+function plantAdjNum(arr)
 {
     let tempAdjNum= 0;
-    for (var i = 0; i < Array.length; i++)
+    for (var i = 0; i < arr.length; i++)
     {
-        for (var j = 0; j < Array[i].length; j++)
+        for (var j = 0; j < arr[i].length; j++)
         {
             //Upper left block check.
-            if (Array[(i - 1)][(j - 1)].isMine == true)
+            if (arr[(i - 1)][(j - 1)].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
             //Upper block check.
-            if (Array[(i - 1)][j].isMine == true)
+            if (arr[(i - 1)][j].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;;
             }
             //Upper right block check.
-            if (Array[(i - 1)][(j + 1)].isMine == true)
+            if (arr[(i - 1)][(j + 1)].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
             //left block check.
-            if (Array[i][(j - 1)].isMine == true)
+            if (arr[i][(j - 1)].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
             //Right block check.
-            if (Array[i][(j + 1)].isMine == true)
+            if (arr[i][(j + 1)].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
             //Lower left block check.
-            if (Array[(i + 1)][(j - 1)].isMine == true)
+            if (arr[(i + 1)][(j - 1)].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
             //Lower block check.
-            if (Array[(i + 1)][j].isMine == true)
+            if (arr[(i + 1)][j].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
             //Lower right block check.
-            if (Array[(i + 1)][(j + 1)].isMine == true)
+            if (arr[(i + 1)][(j + 1)].isMine == true)
             {
                 tempAdjNum= tempAdjNum+ 1;
             }
-            Array[i][j].adjNum= tempAdjNum;
+            arr[i][j].adjNum= tempAdjNum;
         }
     }
-    return Array;
+    return arr;
 }
 
 
 //This function change one tile's falgged.
-//parameter: Array, row, column.
-function setFlag(Array, row, column)
+//parameter: arr, row, column.
+function setFlag(arr, row, column)
 {
-    if(Array[row][column].flagged== false && Array[row][column].revealed== false)
+    if(arr[row][column].flagged== false && arr[row][column].revealed== false)
     {
-    Array[row][column].flagged= true;
+    arr[row][column].flagged= true;
     }
     //If they already have flagged and want to remove the flag. Ask them first, then allow them to perform the task to removbe flag.
-    else if(Array[row][column].flagged== true && Array[row][column].revealed== false)
+    else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
     {
-        document.getElementById("demo").innerHTML = "What are you doing?  Want to change your mind and remove the flag?" + "Click \"y\" for yes, or \"n\" for no.";  //*******Check here guys.
-        
-//*******How do we want to take input from user here?***************************
-        if(y)
-        {
-            Array[row][column].flagged== true;
-        }
-        if(n)
+        document.getElementById("demo").innerHTML = "What are you doing?  Want to change your mind and remove the flag?" + "Click \"y\" for yes";
+
+        arr[row][column].flagged== false;
 
     }
-    return Array;
+    return arr;
 }
 
 
@@ -146,7 +142,7 @@ function setFlag(Array, row, column)
 //It will execute any one of block on the block been clicked.
 //It will change all the tile's revealed = true, who have number 0.
 //Even the tile set with flagged.
-//parameter:  Array, Game, row(i), column(j).
+//parameter:  arr, Game, row(i), column(j).
 
 function clickReveal(Array, Game, i, j)
 {
@@ -367,7 +363,7 @@ function clickReveal(Array, Game, i, j)
                 }
                     //left block check.
                 else if (Array[i][(j - 1)].adjNum == 0) {
-                    clickReveal(Array, Game, i, (j - 1));
+                    clickReveal(arr, Game, i, (j - 1));
                 }
             }
         }
