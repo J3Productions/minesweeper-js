@@ -56,6 +56,7 @@ function plantMine(Array, MineNums, rows, colomns)
             MineNums= MineNums- 1;
         }
     }
+    return Array;
 }
 
 
@@ -69,7 +70,7 @@ function plantAdjNum(Array)
         for (var j = 0; j < array.length; j++) {
             if (Array.isMine== false)
             {
-                let adjMine = 
+                let adjMine =
             }
         }
     }
