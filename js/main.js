@@ -130,7 +130,7 @@ function setFlag(arr, row, column)
     //If they already have flagged and want to remove the flag. Ask them first, then allow them to perform the task to removbe flag.
     else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
     {
-        document.getElementById("demo").innerHTML = "What are you doing?  Want to change your mind and remove the flag?" + "Click \"y\" for yes";
+        document.getElementById("demo").innerHTML = "What are you doing?  You changed your mind?";
 
         arr[row][column].flagged== false;
 
