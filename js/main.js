@@ -40,47 +40,119 @@ function checkMinesInput() {
 var Game = {isWin: false, isLose: false};
 
 
-//This function create an Array, whcih size is based on user input.
+//This function create an arr, whcih size is based on user input.
 //Parameter: rows, columns.
-function createBoard(rows, columns)  //all int type.
+function createBoard(numMines, rows, columns)  //all int type.
 {
-    var Array = new Array(rows); //Fixed size 2d array from user input parameters
+    var arr = [rows]; //Fixed size 2d arr from user input parameters
     for(var i = 0; i<rows; i++)
     {
-        Array[i]= new Array(columns);
-        for(var j = 0; i<columns; i++)
+        arr[i]= [];
+        for(var j = 0; j<columns; j++)
         {
-            Array[i][j] = new Tile(false, 0,false,false); /*****TODO  LOOK AT ARRAY, TILE ADD HERE?*What do you think  place the tile as we build the array?*/
+            arr[i][j] = new Tile(false, 9,false,false);// Adding default tiles
         }
     }
-    return Array
+    plantMine(arr, numMines, rows, columns);//Call to plantMine which returns arr with mines planted and numMines inserted.
+    return arr;
 }
 
 
-//This function plant the Mines inside the Array.
+//This function plant the Mines inside the arr.
 //The Number of Mines are given by player.
 //Using Math.random() to ramdomly plant the Mines.
-//parameter: Array, number of Mine.
-function plantMine(Array, MineNums)
+//parameter: arr, number of Mine.
+function plantMine(arr, numMines, rows, columns)
 {
-
+    while(numMines> 0)
+    {
+        let i= Math.floor(Math.random() * rows); // Assign random i no larger than numRows
+        let j= Math.floor(Math.random() * columns);// Assign random j no larger than numColumns
+        if(arr[i][j].isMine== false)
+        {
+            arr[i][j].isMine= true; // Reassign mine to equal true
+            numMines= numMines- 1;
+        }
+    }
+    plantAdjNum(arr);// Call to assign adjNum in tiles
+    return arr;
 }
 
 
 
 //This function change each tile's adjNum.
-//parameter: Array.
-function plantAdjNum(Array)
+//parameter: arr.
+function plantAdjNum(arr)
 {
-
+    let tempAdjNum= 0;
+    for (var i = 0; i < arr.length; i++)
+    {
+        for (var j = 0; j < arr[i].length; j++)
+        {
+            //Upper left block check.
+            if (arr[(i - 1)][(j - 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Upper block check.
+            if (arr[(i - 1)][j].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;;
+            }
+            //Upper right block check.
+            if (arr[(i - 1)][(j + 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //left block check.
+            if (arr[i][(j - 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Right block check.
+            if (arr[i][(j + 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Lower left block check.
+            if (arr[(i + 1)][(j - 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Lower block check.
+            if (arr[(i + 1)][j].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Lower right block check.
+            if (arr[(i + 1)][(j + 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            arr[i][j].adjNum= tempAdjNum;
+        }
+    }
+    return arr;
 }
 
 
 //This function change one tile's falgged.
-//parameter: Array, row, column.
-function setFlag(Array, row, column)
+//parameter: arr, row, column.
+function setFlag(arr, row, column)
 {
+    if(arr[row][column].flagged== false && arr[row][column].revealed== false)
+    {
+    arr[row][column].flagged= true;
+    }
+    //If they already have flagged and want to remove the flag. Ask them first, then allow them to perform the task to removbe flag.
+    else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
+    {
+        document.getElementById("demo").innerHTML = "What are you doing?  You changed your mind?";
 
+        arr[row][column].flagged== false;
+
+    }
+    return arr;
 }
 
 
@@ -88,7 +160,7 @@ function setFlag(Array, row, column)
 //It will execute any one of block on the block been clicked.
 //It will change all the tile's revealed = true, who have number 0.
 //Even the tile set with flagged.
-//parameter:  Array, Game, row(i), column(j).
+//parameter:  arr, Game, row(i), column(j).
 
 function clickReveal(Array, Game, i, j) {
     if (Array[i][j].isMine == true) {
@@ -445,6 +517,7 @@ function clickReveal(Array, Game, i, j) {
                         Array[(i - 1)][j].flagged = false;
                     }
                     //left block check.
+<<<<<<< HEAD
                     if (Array[i][(j - 1)].adjNum == 0) {
                         clickReveal(Array, Game, i, (j - 1));
                     }
@@ -452,14 +525,22 @@ function clickReveal(Array, Game, i, j) {
                         Array[i][(j - 1)].revealed = true;
                         Array[i][(j - 1)].flagged = false;
                     }
+=======
+                else if (Array[i][(j - 1)].adjNum == 0) {
+                    clickReveal(arr, Game, i, (j - 1));
+>>>>>>> createBoard
                 }
             }
         }
     }
 }
+<<<<<<< HEAD
 
 //This function show all mines, even the game is win or lose.
 function showAllMine()
 {
     
 }
+=======
+console.log(createBoard(2,4,4));
+>>>>>>> createBoard
