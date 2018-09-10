@@ -36,7 +36,7 @@ function createBoard(numMines, rows, columns)  //all int type.
             arr[i][j] = new Tile(false, 9,false,false);// Adding default tiles
         }
     }
-    plantMine(arr, numMines, rows, columns)//Call to plantMine which returns arr with mines planted and numMines inserted.
+    plantMine(arr, numMines, rows, columns);//Call to plantMine which returns arr with mines planted and numMines inserted.
     return arr;
 }
 
@@ -370,3 +370,4 @@ function clickReveal(Array, Game, i, j)
         }
     }
 }
+console.log(createBoard(2,4,4));
