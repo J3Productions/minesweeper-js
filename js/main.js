@@ -65,15 +65,55 @@ function plantMine(Array, MineNums, rows, colomns)
 //parameter: Array.
 function plantAdjNum(Array)
 {
-    for (var i = 0; i < rows; i++)
+    let tempAdjNum= 0;
+    for (var i = 0; i < Array.length; i++)
     {
-        for (var j = 0; j < array.length; j++) {
-            if (Array.isMine== false)
+        for (var j = 0; j < Array[i].length; j++)
+        {
+            //Upper left block check.
+            if (Array[(i - 1)][(j - 1)].isMine == true)
             {
-                let adjMine =
+                tempAdjNum= tempAdjNum+ 1;
             }
+            //Upper block check.
+            if (Array[(i - 1)][j].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;;
+            }
+            //Upper right block check.
+            if (Array[(i - 1)][(j + 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //left block check.
+            if (Array[i][(j - 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Right block check.
+            if (Array[i][(j + 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Lower left block check.
+            if (Array[(i + 1)][(j - 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Lower block check.
+            if (Array[(i + 1)][j].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            //Lower right block check.
+            if (Array[(i + 1)][(j + 1)].isMine == true)
+            {
+                tempAdjNum= tempAdjNum+ 1;
+            }
+            Array[i][j].adjNum= tempAdjNum;
         }
     }
+    return Array;
 }
 
 
@@ -81,7 +121,9 @@ function plantAdjNum(Array)
 //parameter: Array, row, column.
 function setFlag(Array, row, column)
 {
-
+    if(Array[row][column].flagged== false && Array[row][column].revealed== false)
+    Array[row][column].flagged= true;
+    return Array;    
 }
 
 
