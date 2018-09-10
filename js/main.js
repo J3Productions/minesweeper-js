@@ -122,8 +122,23 @@ function plantAdjNum(Array)
 function setFlag(Array, row, column)
 {
     if(Array[row][column].flagged== false && Array[row][column].revealed== false)
+    {
     Array[row][column].flagged= true;
-    return Array;    
+    }
+    //If they already have flagged and want to remove the flag. Ask them first, then allow them to perform the task to removbe flag.
+    else if(Array[row][column].flagged== true && Array[row][column].revealed== false)
+    {
+        document.getElementById("demo").innerHTML = "What are you doing?  Want to change your mind and remove the flag?" + "Click \"y\" for yes, or \"n\" for no.";  //*******Check here guys.
+        
+//*******How do we want to take input from user here?***************************
+        if(y)
+        {
+            Array[row][column].flagged== true;
+        }
+        if(n)
+
+    }
+    return Array;
 }
 
 
