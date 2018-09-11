@@ -97,11 +97,25 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	margin: auto;
+}
 
+td {
+	border: 1px solid black;
+	user-select: none;
+	font-size: 11pt;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+}
 
-
-
-
+td:hover {
+	background-color: gainsboro;
+	transition-duration: 0.25s;
+}
 
 
 
