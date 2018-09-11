@@ -38,7 +38,7 @@
 				<li>A mine, indicating KABOOM! You're dead, game over!</li>
 			</ol>
 			<p>Flags can be used to mark spots where mines are believed to be. To place a flag, right click on an unrevealed tile. Flag all of the mines without flagging any non-mines to win the game!
-			<form>
+			<form id="userInput">
 				<div class="row align-items-end">
 					<div class="col-sm-6 col-md-4">
 						<div class="form-group">
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 				</div>
-				<button type="button submit" class="btn btn-primary btn-lg btn-block">Start</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block" onclick="boardGen()" id="startButton">Start</button>
 			</form>
 
 
@@ -67,32 +67,8 @@
 		<br>
 		<div id="boardContainer" class="container">
 			<table id="gameBoard">
-				<tr>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-				</tr>
-				<tr>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-				</tr>
-				<tr>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-				</tr>
-				<tr>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-					<td data-x="" data-y=""></td>
-				</tr>
 			</table>
-			<p><strong>Flags/Mines:</strong>&nbsp;<span id="flagsPlaced"></span>/<span id="minesOnBoard"></span></p>
+			<p id="status" hidden><strong>Flags/Mines:</strong>&nbsp;<span id="flagsPlaced"></span>/<span id="minesOnBoard"></span></p>
 		</div>
 
 
