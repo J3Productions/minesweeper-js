@@ -66,7 +66,7 @@ function boardGen() {
 	if (lengthField.validity.valid == true && heightField.validity.valid == true && minesField.validity.valid == true) {
 		let length = lengthField.value;
 		let height = heightField.value;
-		let numMines = minesField.value;
+		let mines = minesField.value;
 		
 		document.getElementById("gameBoard").innerHTML = "";
 		
@@ -81,13 +81,13 @@ function boardGen() {
 			document.getElementById("gameBoard").appendChild(row);
 		}
 		
-		createBoard(length, height);
+		//createBoard(mines, length, height);
 		
 		document.getElementById("status").hidden = false;
 		document.getElementById("startButton").setAttribute("class", "btn btn-danger btn-lg btn-block");
 		document.getElementById("startButton").innerHTML = "Restart";
 		document.getElementById("flagsPlaced").innerHTML = 0;
-		document.getElementById("minesOnBoard").innerHTML = numMines;
+		document.getElementById("minesOnBoard").innerHTML = mines;
 	}
 	else {
 		window.alert("One or more of your input fields is invalid. Please check your inputs and try again.");
@@ -201,7 +201,9 @@ function setFlag(arr, row, column)
 //Even the tile set with flagged.
 //parameter:  arr, Game, row(i), column(j).
 
-function clickReveal(arr, Game, i, j) {
+//Something in this function is breaking the whole script. For the sake of having a functioning demo on the website, I have commented this out. If it is fixed, feel free to delete this.
+
+/*function clickReveal(arr, Game, i, j) {
     if (arr[i][j].isMine == true) {
         arr[i][j].revealed = true;
         Game.isLose = true;             //If the click by player and it was a bomb, the game is over.
@@ -567,7 +569,7 @@ function clickReveal(arr, Game, i, j) {
             }
         }
     }
-}
+}*/
 
 //This function show all mines, even the game is win or lose.
 function showAllMine()
