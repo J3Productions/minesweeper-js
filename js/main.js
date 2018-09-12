@@ -770,8 +770,23 @@ function clickReveal(arr, Game, i, j) {
     }
 }
 
-//This function show all mines, even the game is win or lose.
-function showAllMine()
-{
+var test = createBoard(1, 2, 2);
 
+console.log("[" + test[0][0].isMine + "]" + "[" + test[0][1].isMine + "]" + "\n[" + test[1][0].isMine + "]" + "[" + test[1][1].isMine + "]");
+console.log("\n");
+console.log("[" + test[0][0].adjNum + "]" + "[" + test[0][1].adjNum + "]" + "\n[" + test[1][0].adjNum + "]" + "[" + test[1][1].adjNum + "]");
+console.log("\n");
+console.log("[" + test[0][0].revealed + "]" + "[" + test[0][1].revealed + "]" + "\n[" + test[1][0].revealed + "]" + "[" + test[1][1].revealed + "]");
+console.log("\n");
+showAllMine(test);
+console.log("[" + test[0][0].revealed + "]" + "[" + test[0][1].revealed + "]" + "\n[" + test[1][0].revealed + "]" + "[" + test[1][1].revealed + "]");
+
+//This function show all mines, even the game is win or lose.
+function showAllMine(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].length; j++) {
+            arr[i][j].revealed = true;
+        }
+    }
 }
+
