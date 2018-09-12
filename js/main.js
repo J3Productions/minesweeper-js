@@ -133,7 +133,7 @@ function plantAdjNum(arr)
                 //"if, elseif" tiles on the edge of the board so we don't search outside the board. Starting top left and moving clockwise.
 
                 //Top left tile
-                if (i = 0 && j = 0)
+                if (i == 0 && j == 0)
                 {
                     //Right block check.
                     if (arr[i][(j + 1)].isMine == true)
@@ -151,8 +151,8 @@ function plantAdjNum(arr)
                         tempAdjNum= tempAdjNum+ 1;
                     }
                 }
-                //TopRow && 0<column<arr[j].length
-                else if( i = 0 && j > 0 && (j < arr[i].length)
+                //TopRow && 0<column<arr[j].length-1
+                else if( i == 0 && j > 0 && j < arr[i].length - 1)
                 {
                     //Right block check.
                     if (arr[i][(j + 1)].isMine == true)
@@ -181,7 +181,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Top Right tile
-                else if ( i = 0 && j = arr[i].length)
+                else if ( i == 0 && j == arr[i].length -1)
                 {
                     //Lower block check.
                     if (arr[(i + 1)][j].isMine == true)
@@ -199,8 +199,8 @@ function plantAdjNum(arr)
                         tempAdjNum= tempAdjNum+ 1;
                     }
                 }
-                //Right column 0<i<arr[j].length
-                else if(i > 0 &&  j = arr[i].length && i < arr[j].length)
+                //Right column 0<i<arr[j].length-1
+                else if(i > 0 &&  j == arr[i].length - 1 && i < arr[j].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -210,7 +210,7 @@ function plantAdjNum(arr)
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
                     {
-                        tempAdjNum= tempAdjNum+ 1;;
+                        tempAdjNum= tempAdjNum+ 1;
                     }
                     //Lower block check.
                     if (arr[(i + 1)][j].isMine == true)
@@ -229,7 +229,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Bottom right tile
-                else if(i = arr[j].length && j = arr[i].length)
+                else if(i == arr[j].length - 1 && j == arr[i].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -239,7 +239,7 @@ function plantAdjNum(arr)
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
                     {
-                        tempAdjNum= tempAdjNum+ 1;;
+                        tempAdjNum= tempAdjNum+ 1;
                     }
                     //left block check.
                     if (arr[i][(j - 1)].isMine == true)
@@ -247,8 +247,8 @@ function plantAdjNum(arr)
                         tempAdjNum= tempAdjNum+ 1;
                     }
                 }
-                //Bottom row 0<j<arr[i].length
-                else if(i = arr[j].length && j > 0 && j < arr[i].length)
+                //Bottom row 0<j<arr[i].length-1
+                else if(i == arr[j].length - 1 && j > 0 && j < arr[i].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -258,7 +258,7 @@ function plantAdjNum(arr)
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
                     {
-                        tempAdjNum= tempAdjNum+ 1;;
+                        tempAdjNum= tempAdjNum+ 1;
                     }
                     //Upper right block check.
                     if (arr[(i - 1)][(j + 1)].isMine == true)
@@ -277,12 +277,12 @@ function plantAdjNum(arr)
                     }
                 }
                 //Bottom left tile
-                else if(i = arr[j].length - 1 && j = 0)
+                else if(i == arr[j].length - 1 && j = 0)
                 {
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
                     {
-                        tempAdjNum= tempAdjNum+ 1;;
+                        tempAdjNum= tempAdjNum+ 1;
                     }
                     //Upper right block check.
                     if (arr[(i - 1)][(j + 1)].isMine == true)
@@ -296,12 +296,12 @@ function plantAdjNum(arr)
                     }
                 }
                 //Left column 0<i<arr[j].length
-                else if(i > 0 && j = 0 && i < arr[j].length)
+                else if(i > 0 && j == 0 && i < arr[j].length - 1)
                 {
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
                     {
-                        tempAdjNum= tempAdjNum+ 1;;
+                        tempAdjNum= tempAdjNum+ 1;
                     }
                     //Upper right block check.
                     if (arr[(i - 1)][(j + 1)].isMine == true)
@@ -325,7 +325,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Every tile inside of the outer rows and columns
-                else if (i > 0 && j > 0 && i < arr[j].length - 1 && j < arr[i].length)
+                else if (i > 0 && j > 0 && i < arr[j].length - 1 && j < arr[i].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -335,7 +335,7 @@ function plantAdjNum(arr)
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
                     {
-                        tempAdjNum= tempAdjNum+ 1;;
+                        tempAdjNum= tempAdjNum+ 1;
                     }
                     //Upper right block check.
                     if (arr[(i - 1)][(j + 1)].isMine == true)
@@ -384,13 +384,11 @@ function setFlag(arr, row, column)
     {
     arr[row][column].flagged= true;
     }
-    //If they already have flagged and want to remove the flag. Ask them first, then allow them to perform the task to removbe flag.
+    //If they already have flagged and want to remove the flag.
     else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
     {
         document.getElementById("demo").innerHTML = "What are you doing?  You changed your mind?";
-
-        arr[row][column].flagged== false;
-
+        arr[row][column].flagged== false;//Remove flag
     }
     return arr;
 }
@@ -764,7 +762,7 @@ function setFlag(arr, row, column)
                     }
                     else if (arr[i][(j - 1)].adjNum < 9 && arr[i][(j - 1)].revealed == false) {
                         arr[i][(j - 1)].revealed = true;
-                        arr[i][(j - 1)].flagged = false;
+                        arr[i][(j - 1)].flagged == false;
                     }
 
             }
