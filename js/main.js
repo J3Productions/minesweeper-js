@@ -103,6 +103,7 @@ function boardGen() {
 //parameter: arr, number of Mine.
 function plantMine(arr, numMines, rows, columns)
 {
+	'use strict';
     while(numMines> 0)
     {
         let i= Math.floor(Math.random() * rows); // Assign random i no larger than numRows
@@ -123,6 +124,7 @@ function plantMine(arr, numMines, rows, columns)
 //parameter: arr.
 function plantAdjNum(arr)
 {
+	'use strict';
     for (let i = 0; i < arr.length; i++)
     {
         for (let j = 0; j < arr[i].length; j++)
@@ -400,9 +402,7 @@ function setFlag(arr, row, column)
 //Even the tile set with flagged.
 //parameter:  arr, Game, row(i), column(j).
 
-//Something in this function is breaking the whole script. For the sake of having a functioning demo on the website, I have commented this out. If it is fixed, feel free to delete this.
-
-/*function clickReveal(arr, Game, i, j) {
+function clickReveal(arr, Game, i, j) {
     if (arr[i][j].isMine == true) {
         arr[i][j].revealed = true;
         Game.isLose = true;             //If the click by player and it was a bomb, the game is over.
@@ -762,13 +762,13 @@ function setFlag(arr, row, column)
                     }
                     else if (arr[i][(j - 1)].adjNum < 9 && arr[i][(j - 1)].revealed == false) {
                         arr[i][(j - 1)].revealed = true;
-                        arr[i][(j - 1)].flagged == false;
+                        arr[i][(j - 1)].flagged = false;
                     }
-
+                }
             }
         }
     }
-}*/
+}
 
 //This function show all mines, even the game is win or lose.
 function showAllMine()
