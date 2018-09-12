@@ -67,9 +67,9 @@ function boardGen() {
 		let length = lengthField.value;
 		let height = heightField.value;
 		let mines = minesField.value;
-		
+
 		document.getElementById("gameBoard").innerHTML = "";
-		
+
 		for (let i = 0; i < height; i++) {
 			let row = document.createElement("tr");
 			for (let j = 0; j < length; j++) {
@@ -80,9 +80,9 @@ function boardGen() {
 			}
 			document.getElementById("gameBoard").appendChild(row);
 		}
-		
+
 		//createBoard(mines, length, height);
-		
+
 		document.getElementById("status").hidden = false;
 		document.getElementById("startButton").setAttribute("class", "btn btn-danger btn-lg btn-block");
 		document.getElementById("startButton").innerHTML = "Restart";
@@ -92,8 +92,8 @@ function boardGen() {
 	else {
 		window.alert("One or more of your input fields is invalid. Please check your inputs and try again.");
 	}
-	
-	
+
+
 }
 
 
@@ -123,52 +123,253 @@ function plantMine(arr, numMines, rows, columns)
 //parameter: arr.
 function plantAdjNum(arr)
 {
-    let tempAdjNum= 0;
-    for (var i = 0; i < arr.length; i++)
+    for (let i = 0; i < arr.length; i++)
     {
-        for (var j = 0; j < arr[i].length; j++)
+        for (let j = 0; j < arr[i].length; j++)
         {
-            //Upper left block check.
-            if (arr[(i - 1)][(j - 1)].isMine == true)
+            if(arr[i][j].isMine == true)
             {
-                tempAdjNum= tempAdjNum+ 1;
+                var tempAdjNum= 0;
+                //"if, elseif" tiles on the edge of the board so we don't search outside the board. Starting top left and moving clockwise.
+
+                //Top left tile
+                if (i = 0 && j = 0)
+                {
+                    //Right block check.
+                    if (arr[i][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower right block check.
+                    if (arr[(i + 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower block check.
+                    if (arr[(i + 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //TopRow && 0<column<arr[j].length
+                else if( i = 0 && j > 0 && (j < arr[i].length)
+                {
+                    //Right block check.
+                    if (arr[i][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower right block check.
+                    if (arr[(i + 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower block check.
+                    if (arr[(i + 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower left block check.
+                    if (arr[(i + 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //left block check.
+                    if (arr[i][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Top Right tile
+                else if ( i = 0 && j = arr[i].length)
+                {
+                    //Lower block check.
+                    if (arr[(i + 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower left block check.
+                    if (arr[(i + 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //left block check.
+                    if (arr[i][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Right column 0<i<arr[j].length
+                else if(i > 0 &&  j = arr[i].length && i < arr[j].length)
+                {
+                    //Upper left block check.
+                    if (arr[(i - 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Upper block check.
+                    if (arr[(i - 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;;
+                    }
+                    //Lower block check.
+                    if (arr[(i + 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower left block check.
+                    if (arr[(i + 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //left block check.
+                    if (arr[i][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Bottom right tile
+                else if(i = arr[j].length && j = arr[i].length)
+                {
+                    //Upper left block check.
+                    if (arr[(i - 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Upper block check.
+                    if (arr[(i - 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;;
+                    }
+                    //left block check.
+                    if (arr[i][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Bottom row 0<j<arr[i].length
+                else if(i = arr[j].length && j > 0 && j < arr[i].length)
+                {
+                    //Upper left block check.
+                    if (arr[(i - 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Upper block check.
+                    if (arr[(i - 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;;
+                    }
+                    //Upper right block check.
+                    if (arr[(i - 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Right block check.
+                    if (arr[i][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //left block check.
+                    if (arr[i][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Bottom left tile
+                else if(i = arr[j].length - 1 && j = 0)
+                {
+                    //Upper block check.
+                    if (arr[(i - 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;;
+                    }
+                    //Upper right block check.
+                    if (arr[(i - 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Right block check.
+                    if (arr[i][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Left column 0<i<arr[j].length
+                else if(i > 0 && j = 0 && i < arr[j].length)
+                {
+                    //Upper block check.
+                    if (arr[(i - 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;;
+                    }
+                    //Upper right block check.
+                    if (arr[(i - 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Right block check.
+                    if (arr[i][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower right block check.
+                    if (arr[(i + 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower block check.
+                    if (arr[(i + 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                //Every tile inside of the outer rows and columns
+                else if (i > 0 && j > 0 && i < arr[j].length - 1 && j < arr[i].length)
+                {
+                    //Upper left block check.
+                    if (arr[(i - 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Upper block check.
+                    if (arr[(i - 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;;
+                    }
+                    //Upper right block check.
+                    if (arr[(i - 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Right block check.
+                    if (arr[i][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower right block check.
+                    if (arr[(i + 1)][(j + 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower block check.
+                    if (arr[(i + 1)][j].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //Lower left block check.
+                    if (arr[(i + 1)][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                    //left block check.
+                    if (arr[i][(j - 1)].isMine == true)
+                    {
+                        tempAdjNum= tempAdjNum+ 1;
+                    }
+                }
+                arr[i][j].adjNum= tempAdjNum;
             }
-            //Upper block check.
-            if (arr[(i - 1)][j].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;;
-            }
-            //Upper right block check.
-            if (arr[(i - 1)][(j + 1)].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;
-            }
-            //left block check.
-            if (arr[i][(j - 1)].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;
-            }
-            //Right block check.
-            if (arr[i][(j + 1)].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;
-            }
-            //Lower left block check.
-            if (arr[(i + 1)][(j - 1)].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;
-            }
-            //Lower block check.
-            if (arr[(i + 1)][j].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;
-            }
-            //Lower right block check.
-            if (arr[(i + 1)][(j + 1)].isMine == true)
-            {
-                tempAdjNum= tempAdjNum+ 1;
-            }
-            arr[i][j].adjNum= tempAdjNum;
         }
     }
     return arr;
