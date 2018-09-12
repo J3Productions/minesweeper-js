@@ -769,7 +769,7 @@ function clickReveal(arr, Game, i, j) {
         }
     }
 }
-}
+
 //This function show all mines, even the game is win or lose.
 function showAllMine()
 {
