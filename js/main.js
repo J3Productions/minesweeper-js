@@ -384,7 +384,7 @@ function setFlag(arr, row, column)
 {
     if(arr[row][column].flagged== false && arr[row][column].revealed== false)
     {
-    arr[row][column].flagged= true;
+        arr[row][column].flagged= true;
     }
     //If they already have flagged and want to remove the flag.
     else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
@@ -404,7 +404,7 @@ function setFlag(arr, row, column)
 
 function clickReveal(arr, Game, i, j) {
     if (arr[i][j].isMine == true) {
-        arr[i][j].revealed = true;
+        showAllMine(arr);
         Game.isLose = true;             //If the click by player and it was a bomb, the game is over.
     }
     else {
@@ -770,16 +770,26 @@ function clickReveal(arr, Game, i, j) {
     }
 }
 
-var test = createBoard(1, 2, 2);
+//simple test file for all function 
+var test = createBoard(2, 3, 3);
 
-console.log("[" + test[0][0].isMine + "]" + "[" + test[0][1].isMine + "]" + "\n[" + test[1][0].isMine + "]" + "[" + test[1][1].isMine + "]");
+console.log("[" + test[0][0].isMine + "]" + "[" + test[0][1].isMine + "]" + "[" + test[0][2].isMine + "]" + "\n[" + test[1][0].isMine + "]" + "[" + test[1][1].isMine + "]" + "[" + test[1][2].isMine + "]\n" + "["+ test[2][0].isMine + "]" + "[" + test[2][1].isMine + "]" + "[" + test[2][2].isMine + "]" );
 console.log("\n");
-console.log("[" + test[0][0].adjNum + "]" + "[" + test[0][1].adjNum + "]" + "\n[" + test[1][0].adjNum + "]" + "[" + test[1][1].adjNum + "]");
+
+console.log("[" + test[0][0].adjNum + "]" + "[" + test[0][1].adjNum + "]" + "[" + test[0][2].adjNum + "]" + "\n[" + test[1][0].adjNum + "]" + "[" + test[1][1].adjNum + "]" + "[" + test[1][2].adjNum + "]\n" + "[" + test[2][0].adjNum + "]" + "[" + test[2][1].adjNum + "]" + "[" + test[2][2].adjNum + "]");
 console.log("\n");
-console.log("[" + test[0][0].revealed + "]" + "[" + test[0][1].revealed + "]" + "\n[" + test[1][0].revealed + "]" + "[" + test[1][1].revealed + "]");
+
+clickReveal(test, Game, 0, 0);
+console.log("[" + test[0][0].revealed + "]" + "[" + test[0][1].revealed + "]" + "[" + test[0][2].revealed + "]" + "\n[" + test[1][0].revealed + "]" + "[" + test[1][1].revealed + "]" + "[" + test[1][2].revealed + "]\n" + "[" + test[2][0].revealed + "]" + "[" + test[2][1].revealed + "]" + "[" + test[2][2].revealed + "]");
 console.log("\n");
-showAllMine(test);
-console.log("[" + test[0][0].revealed + "]" + "[" + test[0][1].revealed + "]" + "\n[" + test[1][0].revealed + "]" + "[" + test[1][1].revealed + "]");
+
+setFlag(test, 0, 1);
+console.log("[" + test[0][0].flagged+ "]" + "[" + test[0][1].flagged + "]" + "[" + test[0][2].flagged + "]" + "\n[" + test[1][0].flagged + "]" + "[" + test[1][1].flagged + "]" + "[" + test[1][2].flagged + "]\n" + "[" + test[2][0].flagged + "]" + "[" + test[2][1].flagged + "]" + "[" + test[2][2].flagged + "]");
+console.log("\n");
+
+console.log("Win: " + Game.isWin + " Lose: " + Game.isLose);
+//showAllMine(test);
+
 
 //This function show all mines, even the game is win or lose.
 function showAllMine(arr) {
