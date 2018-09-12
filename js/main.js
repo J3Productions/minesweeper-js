@@ -127,7 +127,7 @@ function plantAdjNum(arr)
     {
         for (let j = 0; j < arr[i].length; j++)
         {
-            if(arr[i][j].isMine == true)
+            if(arr[i][j].isMine == false)
             {
                 var tempAdjNum= 0;
                 //"if, elseif" tiles on the edge of the board so we don't search outside the board. Starting top left and moving clockwise.
@@ -200,7 +200,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Right column 0<i<arr[j].length-1
-                else if(i > 0 &&  j == arr[i].length - 1 && i < arr[j].length - 1)
+                else if(i > 0 &&  j == arr[i].length - 1 && i < arr.length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -229,7 +229,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Bottom right tile
-                else if(i == arr[j].length - 1 && j == arr[i].length - 1)
+                else if(i == arr.length - 1 && j == arr[i].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -248,7 +248,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Bottom row 0<j<arr[i].length-1
-                else if(i == arr[j].length - 1 && j > 0 && j < arr[i].length - 1)
+                else if(i == arr.length - 1 && j > 0 && j < arr[i].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
@@ -277,7 +277,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Bottom left tile
-                else if(i == arr[j].length - 1 && j = 0)
+                else if(i == arr.length - 1 && j == 0)
                 {
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
@@ -296,7 +296,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Left column 0<i<arr[j].length
-                else if(i > 0 && j == 0 && i < arr[j].length - 1)
+                else if(i > 0 && j == 0 && i < arr.length - 1)
                 {
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
@@ -325,7 +325,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Every tile inside of the outer rows and columns
-                else if (i > 0 && j > 0 && i < arr[j].length - 1 && j < arr[i].length - 1)
+                else if (i > 0 && j > 0 && i < arr.length - 1 && j < arr[i].length - 1)
                 {
                     //Upper left block check.
                     if (arr[(i - 1)][(j - 1)].isMine == true)
