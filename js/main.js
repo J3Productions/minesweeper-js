@@ -103,6 +103,7 @@ function boardGen() {
 //parameter: arr, number of Mine.
 function plantMine(arr, numMines, rows, columns)
 {
+	'use strict';
     while(numMines> 0)
     {
         let i= Math.floor(Math.random() * rows); // Assign random i no larger than numRows
@@ -123,6 +124,7 @@ function plantMine(arr, numMines, rows, columns)
 //parameter: arr.
 function plantAdjNum(arr)
 {
+	'use strict';
     for (let i = 0; i < arr.length; i++)
     {
         for (let j = 0; j < arr[i].length; j++)
