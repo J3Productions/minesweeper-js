@@ -39,6 +39,8 @@ function checkMinesInput() {
 //An Object that record the status of the game.
 var Game = {isWin: false, isLose: false};
 
+let board = [];
+let boardLength = 0;
 
 //This function create an arr, whcih size is based on user input.
 //Parameter: rows, columns.
@@ -67,21 +69,27 @@ function boardGen() {
 		let length = lengthField.value;
 		let height = heightField.value;
 		let mines = minesField.value;
+		
+		boardLength = length;
 
 		document.getElementById("gameBoard").innerHTML = "";
 
 		for (let i = 0; i < height; i++) {
 			let row = document.createElement("tr");
 			for (let j = 0; j < length; j++) {
+				let leftFunc = "leftClick(" + i + ", " + j + ")";
+				let rightFunc = "rightClick(" + i + ", " + j + ");return false;";
 				let cell = document.createElement("td");
-				cell.setAttribute("data-x", j);
-				cell.setAttribute("data-y", i);
+				let cellID = (i * length) + j;
+				cell.setAttribute("id", cellID);
+				cell.setAttribute("onclick", leftFunc);
+				cell.setAttribute("oncontextmenu", rightFunc);
 				row.appendChild(cell);
 			}
 			document.getElementById("gameBoard").appendChild(row);
 		}
 
-		//createBoard(mines, length, height);
+		board = createBoard(mines, length, height);
 
 		document.getElementById("status").hidden = false;
 		document.getElementById("startButton").setAttribute("class", "btn btn-danger btn-lg btn-block");
@@ -94,6 +102,56 @@ function boardGen() {
 	}
 
 
+}
+
+function leftClick(x, y) {
+	'use strict';
+	
+	if (Game.isLose == true) {
+		window.alert("The game is over. Care to try again?");
+	}
+	
+	clickReveal(board, Game, x, y);
+	
+	if (Game.isLose == true) {
+		window.alert("GAME OVER YOU LOSER");
+	}
+	else {
+		for (let i = 0; i < boardLength; i++) {
+			for (let j = 0; j < boardLength; j++) {
+				if (board[i][j].revealed == true) {
+					let cellID = (i * boardLength) + j;
+					let clicked = document.getElementById(cellID);
+					clicked.innerHTML = board[i][j].adjNum;
+				}
+			}
+		}
+	}
+	
+	
+}
+
+function rightClick(x, y) {
+	'use strict';
+	
+	if (Game.isLose == true) {
+		window.alert("The game is over. Care to try again?");
+	}
+	
+	let cellID = (x * boardLength) + y;
+	let clicked = document.getElementById(cellID);
+	let flags = document.getElementById("flagsPlaced").innerHTML;
+	let flagSpace = setFlag(board, x, y);
+	
+	if (flagSpace) {
+		flags++;
+		clicked.innerHTML = "&#9873;";
+	}
+	else {
+		flags--;
+		clicked.innerHTML = "";
+	}
+	document.getElementById("flagsPlaced").innerHTML = flags;
 }
 
 
@@ -384,15 +442,15 @@ function setFlag(arr, row, column)
 {
     if(arr[row][column].flagged== false && arr[row][column].revealed== false)
     {
-    arr[row][column].flagged= true;
+    	arr[row][column].flagged = true;
+		return true;
     }
     //If they already have flagged and want to remove the flag.
     else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
     {
-        document.getElementById("demo").innerHTML = "What are you doing?  You changed your mind?";
-        arr[row][column].flagged== false;//Remove flag
-    }
-    return arr;
+        arr[row][column].flagged = false;//Remove flag
+		return false;
+	}
 }
 
 
