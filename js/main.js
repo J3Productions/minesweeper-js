@@ -277,7 +277,7 @@ function plantAdjNum(arr)
                     }
                 }
                 //Bottom left tile
-                else if(i == arr[j].length - 1 && j = 0)
+                else if(i == arr[j].length - 1 && j == 0)
                 {
                     //Upper block check.
                     if (arr[(i - 1)][j].isMine == true)
