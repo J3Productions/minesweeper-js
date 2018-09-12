@@ -380,18 +380,28 @@ function plantAdjNum(arr)
 
 //This function change one tile's falgged.
 //parameter: arr, row, column.
-function setFlag(arr, row, column)
+function setFlag(arr, row, column/*, numMinesNotFlagged*/)
 {
     if(arr[row][column].flagged== false && arr[row][column].revealed== false)
     {
         arr[row][column].flagged= true;
+/*TODO***********************
+        numMinesNotFlagged= numMinesNotFlagged -1;
+****/
     }
     //If they already have flagged and want to remove the flag.
     else if(arr[row][column].flagged== true && arr[row][column].revealed== false)
     {
         document.getElementById("demo").innerHTML = "What are you doing?  You changed your mind?";
         arr[row][column].flagged== false;//Remove flag
+
+/*TODO*************************
+        numMinesNotFlagged= numMinesNotFlagged +1;
+****/
     }
+/*TODO ************************************
+do we return numMinesNotFlagged? */
+
     return arr;
 }
 
@@ -770,7 +780,7 @@ function clickReveal(arr, Game, i, j) {
     }
 }
 
-//simple test file for all function 
+//simple test file for all function
 var test = createBoard(2, 3, 3);
 
 console.log("[" + test[0][0].isMine + "]" + "[" + test[0][1].isMine + "]" + "[" + test[0][2].isMine + "]" + "\n[" + test[1][0].isMine + "]" + "[" + test[1][1].isMine + "]" + "[" + test[1][2].isMine + "]\n" + "["+ test[2][0].isMine + "]" + "[" + test[2][1].isMine + "]" + "[" + test[2][2].isMine + "]" );
@@ -799,4 +809,3 @@ function showAllMine(arr) {
         }
     }
 }
-
