@@ -8,18 +8,6 @@
 //Version 3, Author: Jielong Cong
 
 
-
-//An Object Constructor of Tile, the element inside a board.
-function Tile(isMine, adjNum, flagged, revealed)
-{
-    this.isMine = isMine;           //bool
-    this.adjNum = adjNum;           //int
-    this.flagged = flagged;         //bool
-    this.revealed = revealed;       //bool
-}
-
-
-
 function checkMinesInput() {
     'use strict';
     let lengthField = document.getElementById("boardLength");
