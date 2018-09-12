@@ -402,8 +402,6 @@ function setFlag(arr, row, column)
 //Even the tile set with flagged.
 //parameter:  arr, Game, row(i), column(j).
 
-//Something in this function is breaking the whole script. For the sake of having a functioning demo on the website, I have commented this out. If it is fixed, feel free to delete this.
-
 function clickReveal(arr, Game, i, j) {
     if (arr[i][j].isMine == true) {
         arr[i][j].revealed = true;
@@ -771,7 +769,7 @@ function clickReveal(arr, Game, i, j) {
         }
     }
 }
-
+}
 //This function show all mines, even the game is win or lose.
 function showAllMine()
 {
