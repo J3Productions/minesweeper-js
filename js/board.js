@@ -340,11 +340,21 @@ export class Board {
 		if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false)
 		{
 		this.arr[row][column].flagged= true;
+		/**
+		*@desc decrease how many mines are left without a flag.
+		*/
+		if(this.arr[row][column].isMine == true)
+			this.minesNotFlagged == this.minesNotFlagged - 1;
 		}
 		//If they already have flagged and want to remove the flag.
 		else if(this.arr[row][column].flagged== true && this.arr[row][column].getRevealed()== false)
 		{
 			this.arr[row][column].flagged== false;//Remove flag
+			/**
+			*@desc decrease how many mines are left without a flag.
+			*/
+			if(this.arr[row][column].isMine == true)
+				this.minesNotFlagged == this.minesNotFlagged + 1;
 		}
 	}
 
