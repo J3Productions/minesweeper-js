@@ -306,6 +306,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "js/board.js~board#clickreveal",
+    "class/js/board.js~Board.html#instance-method-clickReveal",
+    "js/board.js~Board#clickReveal",
+    "method"
+  ],
+  [
     "js/board.js~board#columns",
     "class/js/board.js~Board.html#instance-member-columns",
     "js/board.js~Board#columns",
@@ -336,6 +342,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "js/board.js~board#plantadjnum",
+    "class/js/board.js~Board.html#instance-method-plantAdjNum",
+    "js/board.js~Board#plantAdjNum",
+    "method"
+  ],
+  [
     "js/board.js~board#plantmine",
     "class/js/board.js~Board.html#instance-method-plantMine",
     "js/board.js~Board#plantMine",
@@ -346,6 +358,18 @@ window.esdocSearchIndex = [
     "class/js/board.js~Board.html#instance-member-rows",
     "js/board.js~Board#rows",
     "member"
+  ],
+  [
+    "js/board.js~board#setflag",
+    "class/js/board.js~Board.html#instance-method-setFlag",
+    "js/board.js~Board#setFlag",
+    "method"
+  ],
+  [
+    "js/board.js~board#showallmine",
+    "class/js/board.js~Board.html#instance-method-showAllMine",
+    "js/board.js~Board#showAllMine",
+    "method"
   ],
   [
     "js/board.js~board#winner",

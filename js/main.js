@@ -1,3 +1,6 @@
+'use strict';
+import { Board } from './board.js'
+
 //Date: 09/06/2018
 //Version 1, Author: Jielong Cong
 
@@ -6,7 +9,6 @@
 
 //Date: 09/07/2018
 //Version 3, Author: Jielong Cong
-
 
 function checkMinesInput() {
     'use strict';
@@ -22,13 +24,6 @@ function checkMinesInput() {
         minesField.readOnly = true;
     }
 }
-
-
-//An Object that record the status of the game.
-var Game = {isWin: false, isLose: false};
-
-
-
 
 function boardGen() {
 	'use strict';
@@ -66,17 +61,5 @@ function boardGen() {
 		window.alert("One or more of your input fields is invalid. Please check your inputs and try again.");
 	}
 
-
-}
-
-
-
-
-
-
-
-//This function show all mines, even the game is win or lose.
-function showAllMine()
-{
 
 }
