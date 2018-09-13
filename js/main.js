@@ -1,6 +1,8 @@
 'use strict';
 import { Board } from './board.js'
 
+let game = undefined;
+
 //Date: 09/06/2018
 //Version 1, Author: Jielong Cong
 
@@ -10,8 +12,7 @@ import { Board } from './board.js'
 //Date: 09/07/2018
 //Version 3, Author: Jielong Cong
 
-function checkMinesInput() {
-    'use strict';
+export function checkMinesInput() {
     let lengthField = document.getElementById("boardLength");
     let heightField = document.getElementById("boardHeight");
     let minesField = document.getElementById("minesInput");
@@ -25,16 +26,20 @@ function checkMinesInput() {
     }
 }
 
-function boardGen() {
-	'use strict';
+export function boardGen() {
 	let lengthField = document.getElementById("boardLength");
 	let heightField = document.getElementById("boardHeight");
 	let minesField = document.getElementById("minesInput");
+    
 
 	if (lengthField.validity.valid == true && heightField.validity.valid == true && minesField.validity.valid == true) {
 		let length = lengthField.value;
 		let height = heightField.value;
 		let mines = minesField.value;
+        
+        game = new Board(mines, height, length);
+        game.plantMine();
+        game.plantAdjNum();
 
 		document.getElementById("gameBoard").innerHTML = "";
 
@@ -49,7 +54,6 @@ function boardGen() {
 			document.getElementById("gameBoard").appendChild(row);
 		}
 
-		//createBoard(mines, length, height);
 
 		document.getElementById("status").hidden = false;
 		document.getElementById("startButton").setAttribute("class", "btn btn-danger btn-lg btn-block");

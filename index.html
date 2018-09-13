@@ -43,13 +43,13 @@
 					<div class="col-sm-6 col-md-4">
 						<div class="form-group">
 							<label for="boardLength"><strong>Board length (between 2 and 50):</strong></label>
-							<input type="number" class="form-control" id="boardLength" min="2" max="50" required onchange="checkMinesInput()">
+							<input type="number" class="form-control" id="boardLength" min="2" max="50" required>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4">
 						<div class="form-group">
 							<label for="boardHeight"><strong>Board height (between 2 and 50):</strong></label>
-							<input type="number" class="form-control" id="boardHeight" min="2" max="50" required onchange="checkMinesInput()">
+							<input type="number" class="form-control" id="boardHeight" min="2" max="50" required>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4">
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 				</div>
-				<button type="button" class="btn btn-primary btn-lg btn-block" onclick="boardGen()" id="startButton">Start</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block" id="startButton">Start</button>
 			</form>
 
 
@@ -79,6 +79,12 @@
 		<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
 		<script src="js/plugins.js"></script>
 		<script src="js/main.js" type="module"></script>
+        <script type="module">
+            import { checkMinesInput, boardGen } from '/js/main.js';
+            document.getElementById("boardLength").addEventListener("change", checkMinesInput);
+            document.getElementById("boardHeight").addEventListener("change", checkMinesInput);
+            document.getElementById("startButton").addEventListener("click", boardGen);
+        </script>
 	</body>
 
 </html>

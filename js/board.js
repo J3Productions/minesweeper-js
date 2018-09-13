@@ -43,10 +43,10 @@ export class Board {
 		
 		for(let i = 0; i<rows; i++)
 		{
-			arr[i]= [];
+			this.arr[i]= [];
 			for(let j = 0; j<columns; j++)
 			{
-				arr[i][j] = new Tile();// Adding default tiles
+				this.arr[i][j] = new Tile();// Adding default tiles
 			}
 		}
 	}
