@@ -351,7 +351,7 @@ export class Board {
 		{
 			this.arr[row][column].flagged== false;//Remove flag
 			/**
-			*@desc decrease how many mines are left without a flag.
+			*@desc increase how many mines are left without a flag.
 			*/
 			if(this.arr[row][column].isMine == true)
 				this.minesNotFlagged == this.minesNotFlagged + 1;
