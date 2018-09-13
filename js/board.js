@@ -16,31 +16,39 @@ export class Board {
 		/** Number of rows (height) on the board. Range: 2-50
 		* @type {number} */
 		this.rows = rows;
-		
+
 		/** Number of columns (length) on the board. Range: 2-50
 		* @type {number} */
 		this.columns = columns;
-		
+
 		/** Number of mines on the board. Range: 1-2499 (Depending on board size)
 		* @type {number} */
 		this.minesTotal = numMines;
-		
+
 		/** 2D array storing all tile objects on the board.
 		* @type {Tile[]} */
 		this.arr = [];
-		
+
 		/** Number of mines that the user has flagged. Must be equal to minesTotal to win the game.
 		* @type {number} */
 		this.minesFlagged = 0;
-		
+
 		/** Flag that indicates if the player has won the game.
 		* @type {boolean} */
 		this.winner = false;
-		
+
 		/** Flag that indicates if the player has lost the game.
 		* @type {boolean} */
 		this.loser = false;
-		
+
+		/** Variable to keep track of mines left that haven't been flagged.
+		*@type {number}*/
+		this.minesNotFlagged = numMines;
+
+		/** Variable to keep track of tiles without a mine in it.
+		*@type {number}*/
+		this.noMineTiles = ((rows * columns) - numMines);
+
 		for(let i = 0; i<rows; i++)
 		{
 			arr[i]= [];
@@ -50,7 +58,7 @@ export class Board {
 			}
 		}
 	}
-	
+
 	/**
 	* This function plant the Mines inside the arr. The Number of Mines are given by player. Using Math.random() to ramdomly plant the Mines.
 	*/
@@ -67,7 +75,7 @@ export class Board {
 			}
 		}
 	}
-	
+
 	/**
 	* This function change each tile's adjNum.
 	*/
@@ -322,7 +330,7 @@ export class Board {
 			}
 		}
 	}
-	
+
 	/**
 	* This function change one tile's flagged status.
 	* @param {number} row Row of tile being flagged.
@@ -339,7 +347,7 @@ export class Board {
 			this.arr[row][column].flagged== false;//Remove flag
 		}
 	}
-	
+
 	/**
 	* This is a recursive function. It will execute any one of block on the block been clicked. It will change all the tile's revealed = true, who have number 0. Even the tile set with flagged.
 	* @param {number} i Row property of tile being revealed.
@@ -712,11 +720,11 @@ export class Board {
 			}
 		}
 	}
-	
+
 	/**
 	* This function show all mines, even the game is win or lose.
 	*/
 	showAllMine() {
-		
+
 	}
 }
