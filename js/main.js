@@ -77,7 +77,7 @@ export function leftClick() {
 	}
 	
 	//[row, column]
-	let coord = [Math.floor(cellID / game.rows), (cellID % game.columns)];
+	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	if (game.isTileRevealed(coord[0], coord[1]) == false)  {
 		game.clickReveal(coord[0], coord[1]);
 	}
@@ -109,7 +109,8 @@ export function leftClick() {
 				if (game.isTileRevealed(i, j)) {
 					document.getElementById(cID).innerHTML = game.getTileAdj(i, j);
 					if (game.getTileAdj(i, j) == 0) {
-						document.getElementById(cID).innerHTML = "";
+						document.getElementById(cID).innerHTML = "0";
+						document.getElementById(cID).setAttribute("style", "backround-color: gainsboro;");
 					}
 				}
 			}
@@ -127,7 +128,7 @@ export function rightClick() {
 	}
 	
 	//[row, column]
-	let coord = [Math.floor(cellID / game.rows), (cellID % game.columns)];
+	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	let flagTile = game.setFlag(coord[0], coord[1]);
 	
 	if (flagTile) {
