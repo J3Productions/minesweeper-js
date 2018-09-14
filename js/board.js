@@ -400,7 +400,7 @@ export class Board {
                     this.arr[i][j].revealed = true;
                     this.arr[i][j].flagged = false;
 
-                    if ((i - 1) > 0 && (j - 1) > 0 && (i + 1) < this.arr.length && (j + 1) < this.arr[i].length) {
+                    if (i > 0 && j > 0 && i < this.arr.length - 1 && j < this.arr[i].length - 1) {
                         //Upper left block check.
                         if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
                             self.clickReveal((i - 1), (j - 1));
