@@ -73,7 +73,7 @@ export function leftClick() {
 	let flags = document.getElementById("flagsPlaced").innerHTML;
 	if (game.loser || game.winner) {
 		window.alert("The game is over! Care to try again?");
-		return;
+		return null;
 	}
 	
 	//[row, column]
@@ -82,35 +82,38 @@ export function leftClick() {
 		game.clickReveal(coord[0], coord[1]);
 	}
 	else {
-		return;
+		return null;
 	}
 	
 	if (game.loser == true) {
 		game.showAllMine();
+		clicked.setAttribute("style", "color: red;");
 		for (let i = 0; i < game.rows; i++) {
 			for (let j = 0; j < game.columns; j++) {
 				let cID = (i * game.columns) + j;
 				if (game.getTileAdj(i, j) == 9) {
 					document.getElementById(cID).innerHTML = "X";
 				}
-				clicked.setAttribute("style", "color: red;");
 			}
 		}
 		window.alert("KABLOOEY! Game over! Care to try again?");
 	}
 	else if (game.getTileAdj(coord[0], coord[1]) >= 1 && game.getTileAdj(coord[0], coord[1]) <= 8) {
 		clicked.innerHTML = game.getTileAdj(coord[0], coord[1]);
+		clicked.setAttribute("style", "color: dodgerblue;");
 	}
-	//This part doesn't quite work yet, need to figure out the problem here
 	else {
 		for (let i = 0; i < game.rows; i++) {
 			for (let j = 0; j < game.columns; j++) {
 				let cID = (i * game.columns) + j;
 				if (game.isTileRevealed(i, j)) {
-					document.getElementById(cID).innerHTML = game.getTileAdj(i, j);
 					if (game.getTileAdj(i, j) == 0) {
+						document.getElementById(cID).setAttribute("style", "color: gainsboro;");
 						document.getElementById(cID).innerHTML = "0";
-						document.getElementById(cID).setAttribute("style", "backround-color: gainsboro;");
+					}
+					else {
+						document.getElementById(cID).setAttribute("style", "color: blue;");
+						document.getElementById(cID).innerHTML = game.getTileAdj(i, j);
 					}
 				}
 			}
@@ -124,7 +127,7 @@ export function rightClick() {
 	let flags = document.getElementById("flagsPlaced").innerHTML;
 	if (game.loser || game.winner) {
 		window.alert("The game is over! Care to try again?");
-		return;
+		return null;
 	}
 	
 	//[row, column]
@@ -138,6 +141,10 @@ export function rightClick() {
 	else {
 		clicked.innerHTML = "";
 		flags--;
+	}
+	
+	if (game.winner == true) {
+		window.alert("You win! Congratulations on not blowing up! Care to try again?");
 	}
 	
 	document.getElementById("flagsPlaced").innerHTML = flags;
