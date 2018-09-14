@@ -368,7 +368,6 @@ export class Board {
             if(this.arr[row][column].isMine == true)
                 this.minesNotFlagged = this.minesNotFlagged + 1;
 
-
             if(this.minesNotFlagged == 0 && this.numFlags == 0)
             this.winner = true;//Check if all mines are flagged
 
