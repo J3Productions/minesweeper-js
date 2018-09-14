@@ -96,11 +96,13 @@ export function leftClick() {
 				}
 			}
 		}
-		window.alert("KABLOOEY! Game over! Care to try again?");
+		$(function(){
+			$('#game-over').modal('show');
+		});
 	}
 	else if (game.getTileAdj(coord[0], coord[1]) >= 1 && game.getTileAdj(coord[0], coord[1]) <= 8) {
+		clicked.setAttribute("style", "color: blue;");
 		clicked.innerHTML = game.getTileAdj(coord[0], coord[1]);
-		clicked.setAttribute("style", "color: dodgerblue;");
 	}
 	else {
 		for (let i = 0; i < game.rows; i++) {
@@ -144,7 +146,9 @@ export function rightClick() {
 	}
 	
 	if (game.winner == true) {
-		window.alert("You win! Congratulations on not blowing up! Care to try again?");
+		$(function(){
+			$('#winner').modal('show');
+		});
 	}
 	
 	document.getElementById("flagsPlaced").innerHTML = flags;

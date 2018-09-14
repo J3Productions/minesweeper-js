@@ -70,6 +70,44 @@
 			</table>
 			<p id="status" hidden><strong>Flags/Mines:</strong>&nbsp;<span id="flagsPlaced"></span>/<span id="minesOnBoard"></span></p>
 		</div>
+		
+		<div class="modal fade" id="game-over" tabindex="-1" role="dialog" aria-labelledby="game-over-modal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Game Over!</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						KABLOOEY! Oh no, you stepped on a mine! I trusted you to be careful out there! A pox on your mailman! Care to try again? Just click Reset!
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="winner" tabindex="-1" role="dialog" aria-labelledby="winner-modal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">You're Winner!</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						HOORAY! You cleared the field of all the mines! Let's all eat a 5-gallon tub of ice cream in celebration! Want to try again? Just click Reset!
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 		<script src="js/vendor/modernizr-3.6.0.min.js"></script>
