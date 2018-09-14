@@ -380,6 +380,9 @@ export class Board {
 	* @param {number} j Column property of tile being revealed.
 	*/
     clickReveal(i, j) {
+
+        var self = this;
+
         if (this.arr[i][j].getMine() == true) {
             this.arr[i][j].revealed = true;
             this.loser = true;             //If the click by player and it was a bomb, the game is over.
@@ -400,7 +403,7 @@ export class Board {
                     if ((i - 1) > 0 && (j - 1) > 0 && (i + 1) < this.arr.length && (j + 1) < this.arr[i].length) {
                         //Upper left block check.
                         if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j - 1));
+                            self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
                             this.arr[(i - 1)][(j - 1)].revealed = true;
@@ -408,7 +411,7 @@ export class Board {
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
-                            clickReveal((i - 1), j);
+                            self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
                             this.arr[(i - 1)][j].revealed = true;
@@ -416,7 +419,7 @@ export class Board {
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j + 1));
+                            self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
                             this.arr[(i - 1)][(j + 1)].revealed = true;
@@ -424,7 +427,7 @@ export class Board {
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
-                            clickReveal(i, (j - 1));
+                            self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
                             this.arr[i][(j - 1)].revealed = true;
@@ -432,7 +435,7 @@ export class Board {
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
-                            clickReveal(i, (j + 1));
+                            self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
                             this.arr[i][(j + 1)].revealed = true;
@@ -440,7 +443,7 @@ export class Board {
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j - 1));
+                            self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
                             this.arr[(i + 1)][(j - 1)].revealed = true;
@@ -448,7 +451,7 @@ export class Board {
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
-                            clickReveal((i + 1), j);
+                            self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
                             this.arr[(i + 1)][j].revealed = true;
@@ -456,7 +459,7 @@ export class Board {
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j + 1));
+                            self.clickReveal((i + 1), (j + 1));
                         }
                         else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
                             this.arr[(i + 1)][(j + 1)].revealed = true;
@@ -467,7 +470,7 @@ export class Board {
                     else if (i > 0 && i < this.arr.length - 1 && j == 0) {
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
-                            clickReveal((i - 1), j);
+                            self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
                             this.arr[(i - 1)][j].revealed = true;
@@ -475,7 +478,7 @@ export class Board {
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j + 1));
+                            self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
                             this.arr[(i - 1)][(j + 1)].revealed = true;
@@ -483,7 +486,7 @@ export class Board {
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
-                            clickReveal(i, (j + 1));
+                            self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
                             this.arr[i][(j + 1)].revealed = true;
@@ -491,7 +494,7 @@ export class Board {
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
-                            clickReveal((i + 1), j);
+                            self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
                             this.arr[(i + 1)][j].revealed = true;
@@ -499,7 +502,7 @@ export class Board {
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j + 1));
+                            self.clickReveal((i + 1), (j + 1));
                         }
                     }
                         //check speical Lower row
@@ -507,7 +510,7 @@ export class Board {
                     {
                         //Upper left block check.
                         if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j - 1));
+                            self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
                             this.arr[(i - 1)][(j - 1)].revealed = true;
@@ -515,7 +518,7 @@ export class Board {
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
-                            clickReveal((i - 1), j);
+                            self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
                             this.arr[(i - 1)][j].revealed = true;
@@ -523,7 +526,7 @@ export class Board {
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j + 1));
+                            self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
                             this.arr[(i - 1)][(j + 1)].revealed = true;
@@ -531,7 +534,7 @@ export class Board {
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
-                            clickReveal(i, (j - 1));
+                            self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
                             this.arr[i][(j - 1)].revealed = true;
@@ -539,7 +542,7 @@ export class Board {
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
-                            clickReveal(i, (j + 1));
+                            self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
                             this.arr[i][(j + 1)].revealed = true;
@@ -551,7 +554,7 @@ export class Board {
                     {
                         //Upper left block check.
                         if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j - 1));
+                            self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
                             this.arr[(i - 1)][(j - 1)].revealed = true;
@@ -559,7 +562,7 @@ export class Board {
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
-                            clickReveal((i - 1), j);
+                            self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
                             this.arr[(i - 1)][j].revealed = true;
@@ -567,7 +570,7 @@ export class Board {
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
-                            clickReveal(i, (j - 1));
+                            self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
                             this.arr[i][(j - 1)].revealed = true;
@@ -575,7 +578,7 @@ export class Board {
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j - 1));
+                            self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
                             this.arr[(i + 1)][(j - 1)].revealed = true;
@@ -584,7 +587,7 @@ export class Board {
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
 
-                            clickReveal((i + 1), j);
+                            self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
                             this.arr[(i + 1)][j].revealed = true;
@@ -595,7 +598,7 @@ export class Board {
                     else if (i == 0 && j > 0 && j < this.arr[i].length - 1) {
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
-                            clickReveal(i, (j - 1));
+                            self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
                             this.arr[i][(j - 1)].revealed = true;
@@ -603,7 +606,7 @@ export class Board {
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
-                            clickReveal(i, (j + 1));
+                            self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
                             this.arr[i][(j + 1)].revealed = true;
@@ -611,7 +614,7 @@ export class Board {
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j - 1));
+                            self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
                             this.arr[(i + 1)][(j - 1)].revealed = true;
@@ -619,7 +622,7 @@ export class Board {
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
-                            clickReveal((i + 1), j);
+                            self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
                             this.arr[(i + 1)][j].revealed = true;
@@ -627,7 +630,7 @@ export class Board {
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j + 1));
+                            self.clickReveal((i + 1), (j + 1));
                         }
                         else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
                             this.arr[(i + 1)][(j + 1)].revealed = true;
@@ -638,7 +641,7 @@ export class Board {
                     else if (i == 0 && j == 0) {
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
-                            clickReveal(i, (j + 1));
+                            self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
                             this.arr[i][(j + 1)].revealed = true;
@@ -646,7 +649,7 @@ export class Board {
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
-                            clickReveal((i + 1), j);
+                            self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
                             this.arr[(i + 1)][j].revealed = true;
@@ -654,7 +657,7 @@ export class Board {
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j + 1));
+                            self.clickReveal((i + 1), (j + 1));
                         }
                         else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
                             this.arr[(i + 1)][(j + 1)].revealed = true;
@@ -665,7 +668,7 @@ export class Board {
                     else if (i == 0 && j == this.arr[i].length - 1) {
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
-                            clickReveal(i, (j - 1));
+                            self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
                             this.arr[i][(j - 1)].revealed = true;
@@ -673,7 +676,7 @@ export class Board {
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i + 1), (j - 1));
+                            self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
                             this.arr[(i + 1)][(j - 1)].revealed = true;
@@ -681,7 +684,7 @@ export class Board {
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
-                            clickReveal((i + 1), j);
+                            self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
                             this.arr[(i + 1)][j].revealed = true;
@@ -692,7 +695,7 @@ export class Board {
                     else if (i == this.arr.length - 1 && j == 0) {
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
-                            clickReveal((i - 1), j);
+                            self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
                             this.arr[(i - 1)][j].revealed = true;
@@ -700,7 +703,7 @@ export class Board {
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j + 1));
+                            self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
                             this.arr[(i - 1)][(j + 1)].revealed = true;
@@ -708,7 +711,7 @@ export class Board {
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
-                            clickReveal(i, (j + 1));
+                            self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
                             this.arr[i][(j + 1)].revealed = true;
@@ -719,7 +722,7 @@ export class Board {
                     else if (i == this.arr.length - 1 && j == this.arr[i].length - 1) {
                         //Upper left block check.
                         if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-                            clickReveal((i - 1), (j - 1));
+                            self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
                             this.arr[(i - 1)][(j - 1)].revealed = true;
@@ -727,7 +730,7 @@ export class Board {
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
-                            clickReveal((i - 1), j);
+                            self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
                             this.arr[(i - 1)][j].revealed = true;
@@ -735,7 +738,7 @@ export class Board {
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
-                            clickReveal(i, (j - 1));
+                            self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
                             this.arr[i][(j - 1)].revealed = true;
@@ -747,7 +750,8 @@ export class Board {
         }
     }
 
-	isTileRevealed(row, column) {
+    isTileRevealed(row, column) {
+        //var test = this.arr[row][column].revealed;
 		return this.arr[row][column].revealed;
 	}
 	
