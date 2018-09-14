@@ -2,7 +2,14 @@
   "source": "./js",
   "destination": "./doc",
   "plugins": [
-    {"name": "esdoc-standard-plugin"},
-    {"name": "esdoc-ecmascript-proposal-plugin", "option": {"all": true}}
-  ]
+	{
+		"name": "esdoc-standard-plugin",
+		"option": {
+			"brand": {
+				"title": "Minesweeper",
+				"repository": "https://github.com/J3Productions/minesweeper-js",
+				"author": "https://github.com/J3Productions"
+			}
+		}
+	}]
 }

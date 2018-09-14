@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">js/board.js</title>
+  <title data-ice="title">js/board.js | Minesweeper</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -24,13 +24,17 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-</header>
+<a style="position:relative; top:3px;" href="https://github.com/J3Productions/minesweeper-js"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/js/board.js~Board.html">Board</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/js/tile.js~Tile.html">Tile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-boardGen">boardGen</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkMinesInput">checkMinesInput</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-leftClick">leftClick</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rightClick">rightClick</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -44,720 +48,759 @@ import { Tile } from &apos;./tile.js&apos;;
  * @implements {Tile}
  */
 export class Board {
-	/**
+    /**
 	* Constructor creates a board, setting all necessary variables and creating a 2D array to store the tiles based on user input.
 	* @param {number} numMines Number of mines on the board.
 	* @param {number} rows Number of rows (height) on the board.
 	* @param {number} columns Number of columns (length) on the board.
 	*/
-	constructor(numMines, rows, columns) {
-		/** Number of rows (height) on the board. Range: 2-50
+    constructor(numMines, rows, columns) {
+        /** Number of rows (height) on the board. Range: 2-50
 		* @type {number} */
-		this.rows = rows;
-		
-		/** Number of columns (length) on the board. Range: 2-50
+        this.rows = Number(rows);
+
+        /** Number of columns (length) on the board. Range: 2-50
 		* @type {number} */
-		this.columns = columns;
-		
-		/** Number of mines on the board. Range: 1-2499 (Depending on board size)
+        this.columns = Number(columns);
+
+        /** Number of mines on the board. Range: 1-2499 (Depending on board size)
 		* @type {number} */
-		this.minesTotal = numMines;
-		
-		/** 2D array storing all tile objects on the board.
+        this.minesTotal = Number(numMines);
+
+        /** 2D array storing all tile objects on the board.
 		* @type {Tile[]} */
-		this.arr = [];
-		
-		/** Number of mines that the user has flagged. Must be equal to minesTotal to win the game.
+        this.arr = [];
+
+        /** Number of mines that the user has flagged. Must be equal to minesTotal to win the game.
 		* @type {number} */
-		this.minesFlagged = 0;
-		
-		/** Flag that indicates if the player has won the game.
+        this.minesFlagged = 0;
+
+        /** Flag that indicates if the player has won the game.
 		* @type {boolean} */
-		this.winner = false;
-		
-		/** Flag that indicates if the player has lost the game.
+        this.winner = false;
+
+        /** Flag that indicates if the player has lost the game.
 		* @type {boolean} */
-		this.loser = false;
-		
-		for(let i = 0; i&lt;rows; i++)
-		{
-			arr[i]= [];
-			for(let j = 0; j&lt;columns; j++)
-			{
-				arr[i][j] = new Tile();// Adding default tiles
-			}
-		}
-	}
-	
-	/**
+        this.loser = false;
+
+        /** Variable to keep track of mines left that haven&apos;t been flagged.
+		*@type {number}*/
+        this.minesNotFlagged = numMines;
+
+        /** Variable to keep track of tiles without a mine in it.
+		*@type {number}*/
+        this.noMineTiles = ((rows * columns) - numMines);
+
+        for(let i = 0; i&lt;rows; i++)
+        {
+            this.arr[i]= [];
+            for(let j = 0; j&lt;columns; j++)
+            {
+                this.arr[i][j] = new Tile();// Adding default tiles
+            }
+        }
+    }
+
+    /**
 	* This function plant the Mines inside the arr. The Number of Mines are given by player. Using Math.random() to ramdomly plant the Mines.
 	*/
-	plantMine() {
-		let numMines = this.minesTotal;
-		while(numMines&gt; 0)
-		{
-			let i= Math.floor(Math.random() * this.rows); // Assign random i no larger than numRows
-			let j= Math.floor(Math.random() * this.columns);// Assign random j no larger than numColumns
-			if(this.arr[i][j].getMine()== false)
-			{
-				this.arr[i][j].setMine(true); // Reassign mine to equal true
-				numMines= numMines- 1;
-			}
-		}
-	}
-	
-	/**
+    plantMine() {
+        let numMines = this.minesTotal;
+        while(numMines&gt; 0)
+        {
+            let i= Math.floor(Math.random() * this.rows); // Assign random i no larger than numRows
+            let j= Math.floor(Math.random() * this.columns);// Assign random j no larger than numColumns
+            if(this.arr[i][j].getMine()== false)
+            {
+                this.arr[i][j].setMine(true); // Reassign mine to equal true
+                numMines= numMines- 1;
+            }
+        }
+    }
+
+    /**
 	* This function change each tile&apos;s adjNum.
 	*/
-	plantAdjNum() {
-		for (let i = 0; i &lt; this.rows; i++)
-		{
-			for (let j = 0; j &lt; this.columns; j++)
-			{
-				if(this.arr[i][j].getMine() == false)
-				{
-					let tempAdjNum= 0;
-					//&quot;if, elseif&quot; tiles on the edge of the board so we don&apos;t search outside the board. Starting top left and moving clockwise.
+    plantAdjNum() {
+        for (let i = 0; i &lt; this.rows; i++)
+        {
+            for (let j = 0; j &lt; this.columns; j++)
+            {
+                if(this.arr[i][j].getMine() == false)
+                {
+                    let tempAdjNum= 0;
+                    //&quot;if, elseif&quot; tiles on the edge of the board so we don&apos;t search outside the board. Starting top left and moving clockwise.
 
-					//Top left tile
-					if (i == 0 &amp;&amp; j == 0)
-					{
-						//Right block check.
-						if (this.arr[i][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//TopRow &amp;&amp; 0&lt;column&lt;this.arr[j].length-1
-					else if( i == 0 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1)
-					{
-						//Right block check.
-						if (this.arr[i][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Top Right tile
-					else if ( i == 0 &amp;&amp; j == this.arr[i].length -1)
-					{
-						//Lower block check.
-						if (this.arr[(i + 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Right column 0&lt;i&lt;this.arr[j].length-1
-					else if(i &gt; 0 &amp;&amp;  j == this.arr[i].length - 1 &amp;&amp; i &lt; this.arr.length - 1)
-					{
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Bottom right tile
-					else if(i == this.arr.length - 1 &amp;&amp; j == this.arr[i].length - 1)
-					{
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Bottom row 0&lt;j&lt;this.arr[i].length-1
-					else if(i == this.arr.length - 1 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1)
-					{
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Bottom left tile
-					else if(i == this.arr.length - 1 &amp;&amp; j == 0)
-					{
-						//Upper block check.
-						if (this.arr[(i - 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Left column 0&lt;i&lt;this.arr[j].length
-					else if(i &gt; 0 &amp;&amp; j == 0 &amp;&amp; i &lt; this.arr.length - 1)
-					{
-						//Upper block check.
-						if (this.arr[(i - 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					//Every tile inside of the outer rows and columns
-					else if (i &gt; 0 &amp;&amp; j &gt; 0 &amp;&amp; i &lt; this.arr.length - 1 &amp;&amp; j &lt; this.arr[i].length - 1)
-					{
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].getMine() == true)
-						{
-							tempAdjNum= tempAdjNum+ 1;
-						}
-					}
-					this.arr[i][j].setAdjacent(tempAdjNum);
-				}
-			}
-		}
-	}
-	
-	/**
+                    //Top left tile
+                    if (i == 0 &amp;&amp; j == 0)
+                    {
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //TopRow &amp;&amp; 0&lt;column&lt;this.arr[j].length-1
+                    else if( i == 0 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1)
+                    {
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Top Right tile
+                    else if ( i == 0 &amp;&amp; j == this.arr[i].length -1)
+                    {
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Right column 0&lt;i&lt;this.arr[j].length-1
+                    else if(i &gt; 0 &amp;&amp;  j == this.arr[i].length - 1 &amp;&amp; i &lt; this.arr.length - 1)
+                    {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Bottom right tile
+                    else if(i == this.arr.length - 1 &amp;&amp; j == this.arr[i].length - 1)
+                    {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Bottom row 0&lt;j&lt;this.arr[i].length-1
+                    else if(i == this.arr.length - 1 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1)
+                    {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Bottom left tile
+                    else if(i == this.arr.length - 1 &amp;&amp; j == 0)
+                    {
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Left column 0&lt;i&lt;this.arr[j].length
+                    else if(i &gt; 0 &amp;&amp; j == 0 &amp;&amp; i &lt; this.arr.length - 1)
+                    {
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                        //Every tile inside of the outer rows and columns
+                    else if (i &gt; 0 &amp;&amp; j &gt; 0 &amp;&amp; i &lt; this.arr.length - 1 &amp;&amp; j &lt; this.arr[i].length - 1)
+                    {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].getMine() == true)
+                        {
+                            tempAdjNum= tempAdjNum+ 1;
+                        }
+                    }
+                    this.arr[i][j].setAdjacent(tempAdjNum);
+                }
+            }
+        }
+    }
+
+    /**
 	* This function change one tile&apos;s flagged status.
 	* @param {number} row Row of tile being flagged.
 	* @param {number} column Column of tile being flagged.
+	* @return {boolean} The status of the tile - true for flagged, false for not flagged
 	*/
-	setFlag(row, column) {
-		if(this.arr[row][column].flagged== false &amp;&amp; this.arr[row][column].getRevealed()== false)
-		{
-		this.arr[row][column].flagged= true;
-		}
-		//If they already have flagged and want to remove the flag.
-		else if(this.arr[row][column].flagged== true &amp;&amp; this.arr[row][column].getRevealed()== false)
-		{
-			this.arr[row][column].flagged== false;//Remove flag
-		}
-	}
-	
-	/**
+    setFlag(row, column) {
+        if(this.arr[row][column].flagged== false &amp;&amp; this.arr[row][column].getRevealed()== false)
+        {
+            this.arr[row][column].flagged= true;
+            /**
+            *@desc decrease how many mines are left without a flag.
+            */
+            if(this.arr[row][column].isMine == true)
+                this.minesNotFlagged == this.minesNotFlagged - 1;
+			
+			return true;
+        }
+            //If they already have flagged and want to remove the flag.
+        else if(this.arr[row][column].flagged== true &amp;&amp; this.arr[row][column].getRevealed()== false)
+        {
+            this.arr[row][column].flagged= false;//Remove flag
+            /**
+			*@desc increase how many mines are left without a flag.
+			*/
+            if(this.arr[row][column].isMine == true)
+                this.minesNotFlagged == this.minesNotFlagged + 1;
+			
+			return false;
+        }
+    }
+
+    /*
+    *When the status of the game is Win or Lose, call this function to reveal all the blocks.
+    */
+    showAllMine() {
+        for (var i = 0; i &lt; this.arr.length; i++) {
+            for (var j = 0; j &lt; this.arr[i].length; j++) {
+                this.arr[i][j].revealed = true;
+            }
+        }
+    }
+
+    /**
 	* This is a recursive function. It will execute any one of block on the block been clicked. It will change all the tile&apos;s revealed = true, who have number 0. Even the tile set with flagged.
 	* @param {number} i Row property of tile being revealed.
 	* @param {number} j Column property of tile being revealed.
 	*/
-	clickReveal(i, j) {
-		if (this.arr[i][j].getMine() == true) {
-			this.arr[i][j].revealed = true;
-			this.loser = true;             //If the click by player and it was a bomb, the game is over.
-		}
-		else {
+    clickReveal(i, j) {
+        if (this.arr[i][j].getMine() == true) {
+            this.arr[i][j].revealed = true;
+            this.loser = true;             //If the click by player and it was a bomb, the game is over.
+        }
+        else {
 
-			if (this.arr[i][j].adjNum &gt; 0 &amp;&amp; this.arr[i][j].adjNum &lt; 9) {
-				if (this.arr[i][j].revealed == false) {
-					this.arr[i][j].revealed = true;
-					this.arr[i][j].flagged = false;
-				}
-			}
-			else if (this.arr[i][j].adjNum == 0) {
-				if (this.arr[i][j].revealed == false) {
-					this.arr[i][j].revealed = true;
-					this.arr[i][j].flagged = false;
+            if (this.arr[i][j].adjNum &gt; 0 &amp;&amp; this.arr[i][j].adjNum &lt; 9) {
+                if (this.arr[i][j].revealed == false) {
+                    this.arr[i][j].revealed = true;
+                    this.arr[i][j].flagged = false;
+                }
+            }
+            else if (this.arr[i][j].adjNum == 0) {
+                if (this.arr[i][j].revealed == false) {
+                    this.arr[i][j].revealed = true;
+                    this.arr[i][j].flagged = false;
 
-					if ((i - 1) &gt; 0 &amp;&amp; (j - 1) &gt; 0 &amp;&amp; (i + 1) &lt; this.arr.length &amp;&amp; (j + 1) &lt; this.arr[i].length) {
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i - 1), (j - 1));
-						}
-						else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
-							this.arr[(i - 1)][(j - 1)].revealed = true;
-							this.arr[(i - 1)][(j - 1)].flagged = false;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].adjNum == 0) {
-							clickReveal((i - 1), j);
-						}
-						else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
-							this.arr[(i - 1)][j].revealed = true;
-							this.arr[(i - 1)][j].flagged = false;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i - 1), (j + 1));
-						}
-						else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
-							this.arr[(i - 1)][(j + 1)].revealed = true;
-							this.arr[(i - 1)][(j + 1)].flagged = false;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].adjNum == 0) {
-							clickReveal(i, (j - 1));
-						}
-						else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
-							this.arr[i][(j - 1)].revealed = true;
-							this.arr[i][(j - 1)].flagged = false;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].adjNum == 0) {
-							clickReveal(i, (j + 1));
-						}
-						else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
-							this.arr[i][(j + 1)].revealed = true;
-							this.arr[i][(j + 1)].flagged = false;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i + 1), (j - 1));
-						}
-						else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
-							this.arr[(i + 1)][(j - 1)].revealed = true;
-							this.arr[(i + 1)][(j - 1)].flagged = false;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].adjNum == 0) {
-							clickReveal((i + 1), j);
-						}
-						else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
-							this.arr[(i + 1)][j].revealed = true;
-							this.arr[(i + 1)][j].flagged = false;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i + 1), (j + 1));
-						}
-						else if (this.arr[(i + 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j + 1)].revealed == false) {
-							this.arr[(i + 1)][(j + 1)].revealed = true;
-							this.arr[(i + 1)][(j + 1)].flagged = false;
-						}
-					}
-						//check speical left column without two corner blocks							//fixed
-					else if (i &gt; 0 &amp;&amp; i &lt; this.arr.length - 1 &amp;&amp; j == 0) {
-						//Upper block check.
-						if (this.arr[(i - 1)][j].adjNum == 0) {
-							clickReveal((i - 1), j);
-						}
-						else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
-							this.arr[(i - 1)][j].revealed = true;
-							this.arr[(i - 1)][j].flagged = false;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i - 1), (j + 1));
-						}
-						else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
-							this.arr[(i - 1)][(j + 1)].revealed = true;
-							this.arr[(i - 1)][(j + 1)].flagged = false;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].adjNum == 0) {
-							clickReveal(i, (j + 1));
-						}
-						else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
-							this.arr[i][(j + 1)].revealed = true;
-							this.arr[i][(j + 1)].flagged = false;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].adjNum == 0) {
-							clickReveal((i + 1), j);
-						}
-						else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
-							this.arr[(i + 1)][j].revealed = true;
-							this.arr[(i + 1)][j].flagged = false;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i + 1), (j + 1));
-						}
-					}
-						//check speical Lower row
-					else if (i == this.arr.length - 1 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1) 		//fixed
-					{
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i - 1), (j - 1));
-						}
-						else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
-							this.arr[(i - 1)][(j - 1)].revealed = true;
-							this.arr[(i - 1)][(j - 1)].flagged = false;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].adjNum == 0) {
-							clickReveal((i - 1), j);
-						}
-						else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
-							this.arr[(i - 1)][j].revealed = true;
-							this.arr[(i - 1)][j].flagged = false;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i - 1), (j + 1));
-						}
-						else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
-							this.arr[(i - 1)][(j + 1)].revealed = true;
-							this.arr[(i - 1)][(j + 1)].flagged = false;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].adjNum == 0) {
-							clickReveal(i, (j - 1));
-						}
-						else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
-							this.arr[i][(j - 1)].revealed = true;
-							this.arr[i][(j - 1)].flagged = false;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].adjNum == 0) {
-							clickReveal(i, (j + 1));
-						}
-						else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
-							this.arr[i][(j + 1)].revealed = true;
-							this.arr[i][(j + 1)].flagged = false;
-						}
-					}
-						//check speical right column
-					else if (i &gt; 0 &amp;&amp; i &lt; this.arr.length - 1 &amp;&amp; j == this.arr[i].length - 1) 			//fixed
-					{
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i - 1), (j - 1));
-						}
-						else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
-							this.arr[(i - 1)][(j - 1)].revealed = true;
-							this.arr[(i - 1)][(j - 1)].flagged = false;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].adjNum == 0) {
-							clickReveal((i - 1), j);
-						}
-						else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
-							this.arr[(i - 1)][j].revealed = true;
-							this.arr[(i - 1)][j].flagged = false;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].adjNum == 0) {
-							clickReveal(i, (j - 1));
-						}
-						else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
-							this.arr[i][(j - 1)].revealed = true;
-							this.arr[i][(j - 1)].flagged = false;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i + 1), (j - 1));
-						}
-						else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
-							this.arr[(i + 1)][(j - 1)].revealed = true;
-							this.arr[(i + 1)][(j - 1)].flagged = false;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].adjNum == 0) {
+                    if ((i - 1) &gt; 0 &amp;&amp; (j - 1) &gt; 0 &amp;&amp; (i + 1) &lt; this.arr.length &amp;&amp; (j + 1) &lt; this.arr[i].length) {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j - 1));
+                        }
+                        else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            this.arr[(i - 1)][(j - 1)].revealed = true;
+                            this.arr[(i - 1)][(j - 1)].flagged = false;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].adjNum == 0) {
+                            clickReveal((i - 1), j);
+                        }
+                        else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
+                            this.arr[(i - 1)][j].revealed = true;
+                            this.arr[(i - 1)][j].flagged = false;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j + 1));
+                        }
+                        else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            this.arr[(i - 1)][(j + 1)].revealed = true;
+                            this.arr[(i - 1)][(j + 1)].flagged = false;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].adjNum == 0) {
+                            clickReveal(i, (j - 1));
+                        }
+                        else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
+                            this.arr[i][(j - 1)].revealed = true;
+                            this.arr[i][(j - 1)].flagged = false;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].adjNum == 0) {
+                            clickReveal(i, (j + 1));
+                        }
+                        else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
+                            this.arr[i][(j + 1)].revealed = true;
+                            this.arr[i][(j + 1)].flagged = false;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j - 1));
+                        }
+                        else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            this.arr[(i + 1)][(j - 1)].revealed = true;
+                            this.arr[(i + 1)][(j - 1)].flagged = false;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].adjNum == 0) {
+                            clickReveal((i + 1), j);
+                        }
+                        else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
+                            this.arr[(i + 1)][j].revealed = true;
+                            this.arr[(i + 1)][j].flagged = false;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j + 1));
+                        }
+                        else if (this.arr[(i + 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            this.arr[(i + 1)][(j + 1)].revealed = true;
+                            this.arr[(i + 1)][(j + 1)].flagged = false;
+                        }
+                    }
+                        //check speical left column without two corner blocks							//fixed
+                    else if (i &gt; 0 &amp;&amp; i &lt; this.arr.length - 1 &amp;&amp; j == 0) {
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].adjNum == 0) {
+                            clickReveal((i - 1), j);
+                        }
+                        else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
+                            this.arr[(i - 1)][j].revealed = true;
+                            this.arr[(i - 1)][j].flagged = false;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j + 1));
+                        }
+                        else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            this.arr[(i - 1)][(j + 1)].revealed = true;
+                            this.arr[(i - 1)][(j + 1)].flagged = false;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].adjNum == 0) {
+                            clickReveal(i, (j + 1));
+                        }
+                        else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
+                            this.arr[i][(j + 1)].revealed = true;
+                            this.arr[i][(j + 1)].flagged = false;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].adjNum == 0) {
+                            clickReveal((i + 1), j);
+                        }
+                        else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
+                            this.arr[(i + 1)][j].revealed = true;
+                            this.arr[(i + 1)][j].flagged = false;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j + 1));
+                        }
+                    }
+                        //check speical Lower row
+                    else if (i == this.arr.length - 1 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1) 		//fixed
+                    {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j - 1));
+                        }
+                        else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            this.arr[(i - 1)][(j - 1)].revealed = true;
+                            this.arr[(i - 1)][(j - 1)].flagged = false;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].adjNum == 0) {
+                            clickReveal((i - 1), j);
+                        }
+                        else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
+                            this.arr[(i - 1)][j].revealed = true;
+                            this.arr[(i - 1)][j].flagged = false;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j + 1));
+                        }
+                        else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            this.arr[(i - 1)][(j + 1)].revealed = true;
+                            this.arr[(i - 1)][(j + 1)].flagged = false;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].adjNum == 0) {
+                            clickReveal(i, (j - 1));
+                        }
+                        else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
+                            this.arr[i][(j - 1)].revealed = true;
+                            this.arr[i][(j - 1)].flagged = false;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].adjNum == 0) {
+                            clickReveal(i, (j + 1));
+                        }
+                        else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
+                            this.arr[i][(j + 1)].revealed = true;
+                            this.arr[i][(j + 1)].flagged = false;
+                        }
+                    }
+                        //check speical right column
+                    else if (i &gt; 0 &amp;&amp; i &lt; this.arr.length - 1 &amp;&amp; j == this.arr[i].length - 1) 			//fixed
+                    {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j - 1));
+                        }
+                        else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            this.arr[(i - 1)][(j - 1)].revealed = true;
+                            this.arr[(i - 1)][(j - 1)].flagged = false;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].adjNum == 0) {
+                            clickReveal((i - 1), j);
+                        }
+                        else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
+                            this.arr[(i - 1)][j].revealed = true;
+                            this.arr[(i - 1)][j].flagged = false;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].adjNum == 0) {
+                            clickReveal(i, (j - 1));
+                        }
+                        else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
+                            this.arr[i][(j - 1)].revealed = true;
+                            this.arr[i][(j - 1)].flagged = false;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j - 1));
+                        }
+                        else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            this.arr[(i + 1)][(j - 1)].revealed = true;
+                            this.arr[(i + 1)][(j - 1)].flagged = false;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].adjNum == 0) {
 
-							clickReveal((i + 1), j);
-						}
-						else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
-							this.arr[(i + 1)][j].revealed = true;
-							this.arr[(i + 1)][j].flagged = false;
-						}
-					}
-						//check speical Upper row												//fixed
-					else if (i == 0 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1) {
-						//left block check.
-						if (this.arr[i][(j - 1)].adjNum == 0) {
-							clickReveal(i, (j - 1));
-						}
-						else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
-							this.arr[i][(j - 1)].revealed = true;
-							this.arr[i][(j - 1)].flagged = false;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].adjNum == 0) {
-							clickReveal(i, (j + 1));
-						}
-						else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
-							this.arr[i][(j + 1)].revealed = true;
-							this.arr[i][(j + 1)].flagged = false;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i + 1), (j - 1));
-						}
-						else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
-							this.arr[(i + 1)][(j - 1)].revealed = true;
-							this.arr[(i + 1)][(j - 1)].flagged = false;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].adjNum == 0) {
-							clickReveal((i + 1), j);
-						}
-						else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
-							this.arr[(i + 1)][j].revealed = true;
-							this.arr[(i + 1)][j].flagged = false;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i + 1), (j + 1));
-						}
-						else if (this.arr[(i + 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j + 1)].revealed == false) {
-							this.arr[(i + 1)][(j + 1)].revealed = true;
-							this.arr[(i + 1)][(j + 1)].flagged = false;
-						}
-					}
-						//Upper left corner
-					else if (i == 0 &amp;&amp; j == 0) {
-						//Right block check.
-						if (this.arr[i][(j + 1)].adjNum == 0) {
-							clickReveal(i, (j + 1));
-						}
-						else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
-							this.arr[i][(j + 1)].revealed = true;
-							this.arr[i][(j + 1)].flagged = false;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].adjNum == 0) {
-							clickReveal((i + 1), j);
-						}
-						else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
-							this.arr[(i + 1)][j].revealed = true;
-							this.arr[(i + 1)][j].flagged = false;
-						}
-						//Lower right block check.
-						if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i + 1), (j + 1));
-						}
-						else if (this.arr[(i + 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j + 1)].revealed == false) {
-							this.arr[(i + 1)][(j + 1)].revealed = true;
-							this.arr[(i + 1)][(j + 1)].flagged = false;
-						}
-					}
-						//Upper right corner
-					else if (i == 0 &amp;&amp; j == this.arr[i].length - 1) {
-						//left block check.
-						if (this.arr[i][(j - 1)].adjNum == 0) {
-							clickReveal(i, (j - 1));
-						}
-						else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
-							this.arr[i][(j - 1)].revealed = true;
-							this.arr[i][(j - 1)].flagged = false;
-						}
-						//Lower left block check.
-						if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i + 1), (j - 1));
-						}
-						else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
-							this.arr[(i + 1)][(j - 1)].revealed = true;
-							this.arr[(i + 1)][(j - 1)].flagged = false;
-						}
-						//Lower block check.
-						if (this.arr[(i + 1)][j].adjNum == 0) {
-							clickReveal((i + 1), j);
-						}
-						else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
-							this.arr[(i + 1)][j].revealed = true;
-							this.arr[(i + 1)][j].flagged = false;
-						}
-					}
-						//Lower left corner
-					else if (i == this.arr.length - 1 &amp;&amp; j == 0) {
-						//Upper block check.
-						if (this.arr[(i - 1)][j].adjNum == 0) {
-							clickReveal((i - 1), j);
-						}
-						else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
-							this.arr[(i - 1)][j].revealed = true;
-							this.arr[(i - 1)][j].flagged = false;
-						}
-						//Upper right block check.
-						if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
-							clickReveal((i - 1), (j + 1));
-						}
-						else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
-							this.arr[(i - 1)][(j + 1)].revealed = true;
-							this.arr[(i - 1)][(j + 1)].flagged = false;
-						}
-						//Right block check.
-						if (this.arr[i][(j + 1)].adjNum == 0) {
-							clickReveal(i, (j + 1));
-						}
-						else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
-							this.arr[i][(j + 1)].revealed = true;
-							this.arr[i][(j + 1)].flagged = false;
-						}
-					}
-						//Lower right corner
-					else if (i == this.arr.length - 1 &amp;&amp; j == this.arr[i].length - 1) {
-						//Upper left block check.
-						if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
-							clickReveal((i - 1), (j - 1));
-						}
-						else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
-							this.arr[(i - 1)][(j - 1)].revealed = true;
-							this.arr[(i - 1)][(j - 1)].flagged = false;
-						}
-						//Upper block check.
-						if (this.arr[(i - 1)][j].adjNum == 0) {
-							clickReveal((i - 1), j);
-						}
-						else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
-							this.arr[(i - 1)][j].revealed = true;
-							this.arr[(i - 1)][j].flagged = false;
-						}
-						//left block check.
-						if (this.arr[i][(j - 1)].adjNum == 0) {
-							clickReveal(i, (j - 1));
-						}
-						else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
-							this.arr[i][(j - 1)].revealed = true;
-							this.arr[i][(j - 1)].flagged = false;
-						}
-					}
-				}
-			}
-		}
+                            clickReveal((i + 1), j);
+                        }
+                        else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
+                            this.arr[(i + 1)][j].revealed = true;
+                            this.arr[(i + 1)][j].flagged = false;
+                        }
+                    }
+                        //check speical Upper row												//fixed
+                    else if (i == 0 &amp;&amp; j &gt; 0 &amp;&amp; j &lt; this.arr[i].length - 1) {
+                        //left block check.
+                        if (this.arr[i][(j - 1)].adjNum == 0) {
+                            clickReveal(i, (j - 1));
+                        }
+                        else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
+                            this.arr[i][(j - 1)].revealed = true;
+                            this.arr[i][(j - 1)].flagged = false;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].adjNum == 0) {
+                            clickReveal(i, (j + 1));
+                        }
+                        else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
+                            this.arr[i][(j + 1)].revealed = true;
+                            this.arr[i][(j + 1)].flagged = false;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j - 1));
+                        }
+                        else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            this.arr[(i + 1)][(j - 1)].revealed = true;
+                            this.arr[(i + 1)][(j - 1)].flagged = false;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].adjNum == 0) {
+                            clickReveal((i + 1), j);
+                        }
+                        else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
+                            this.arr[(i + 1)][j].revealed = true;
+                            this.arr[(i + 1)][j].flagged = false;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j + 1));
+                        }
+                        else if (this.arr[(i + 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            this.arr[(i + 1)][(j + 1)].revealed = true;
+                            this.arr[(i + 1)][(j + 1)].flagged = false;
+                        }
+                    }
+                        //Upper left corner
+                    else if (i == 0 &amp;&amp; j == 0) {
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].adjNum == 0) {
+                            clickReveal(i, (j + 1));
+                        }
+                        else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
+                            this.arr[i][(j + 1)].revealed = true;
+                            this.arr[i][(j + 1)].flagged = false;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].adjNum == 0) {
+                            clickReveal((i + 1), j);
+                        }
+                        else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
+                            this.arr[(i + 1)][j].revealed = true;
+                            this.arr[(i + 1)][j].flagged = false;
+                        }
+                        //Lower right block check.
+                        if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j + 1));
+                        }
+                        else if (this.arr[(i + 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            this.arr[(i + 1)][(j + 1)].revealed = true;
+                            this.arr[(i + 1)][(j + 1)].flagged = false;
+                        }
+                    }
+                        //Upper right corner
+                    else if (i == 0 &amp;&amp; j == this.arr[i].length - 1) {
+                        //left block check.
+                        if (this.arr[i][(j - 1)].adjNum == 0) {
+                            clickReveal(i, (j - 1));
+                        }
+                        else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
+                            this.arr[i][(j - 1)].revealed = true;
+                            this.arr[i][(j - 1)].flagged = false;
+                        }
+                        //Lower left block check.
+                        if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i + 1), (j - 1));
+                        }
+                        else if (this.arr[(i + 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            this.arr[(i + 1)][(j - 1)].revealed = true;
+                            this.arr[(i + 1)][(j - 1)].flagged = false;
+                        }
+                        //Lower block check.
+                        if (this.arr[(i + 1)][j].adjNum == 0) {
+                            clickReveal((i + 1), j);
+                        }
+                        else if (this.arr[(i + 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i + 1)][j].revealed == false) {
+                            this.arr[(i + 1)][j].revealed = true;
+                            this.arr[(i + 1)][j].flagged = false;
+                        }
+                    }
+                        //Lower left corner
+                    else if (i == this.arr.length - 1 &amp;&amp; j == 0) {
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].adjNum == 0) {
+                            clickReveal((i - 1), j);
+                        }
+                        else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
+                            this.arr[(i - 1)][j].revealed = true;
+                            this.arr[(i - 1)][j].flagged = false;
+                        }
+                        //Upper right block check.
+                        if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j + 1));
+                        }
+                        else if (this.arr[(i - 1)][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            this.arr[(i - 1)][(j + 1)].revealed = true;
+                            this.arr[(i - 1)][(j + 1)].flagged = false;
+                        }
+                        //Right block check.
+                        if (this.arr[i][(j + 1)].adjNum == 0) {
+                            clickReveal(i, (j + 1));
+                        }
+                        else if (this.arr[i][(j + 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j + 1)].revealed == false) {
+                            this.arr[i][(j + 1)].revealed = true;
+                            this.arr[i][(j + 1)].flagged = false;
+                        }
+                    }
+                        //Lower right corner
+                    else if (i == this.arr.length - 1 &amp;&amp; j == this.arr[i].length - 1) {
+                        //Upper left block check.
+                        if (this.arr[(i - 1)][(j - 1)].adjNum == 0) {
+                            clickReveal((i - 1), (j - 1));
+                        }
+                        else if (this.arr[(i - 1)][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            this.arr[(i - 1)][(j - 1)].revealed = true;
+                            this.arr[(i - 1)][(j - 1)].flagged = false;
+                        }
+                        //Upper block check.
+                        if (this.arr[(i - 1)][j].adjNum == 0) {
+                            clickReveal((i - 1), j);
+                        }
+                        else if (this.arr[(i - 1)][j].adjNum &lt; 9 &amp;&amp; this.arr[(i - 1)][j].revealed == false) {
+                            this.arr[(i - 1)][j].revealed = true;
+                            this.arr[(i - 1)][j].flagged = false;
+                        }
+                        //left block check.
+                        if (this.arr[i][(j - 1)].adjNum == 0) {
+                            clickReveal(i, (j - 1));
+                        }
+                        else if (this.arr[i][(j - 1)].adjNum &lt; 9 &amp;&amp; this.arr[i][(j - 1)].revealed == false) {
+                            this.arr[i][(j - 1)].revealed = true;
+                            this.arr[i][(j - 1)].flagged = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+	isTileRevealed(row, column) {
+		return this.arr[row][column].revealed;
 	}
 	
-	/**
-	* This function show all mines, even the game is win or lose.
-	*/
-	showAllMine() {
-		
+	getTileAdj(row, column) {
+		return this.arr[row][column].getAdjacent();
 	}
-}</code></pre>
+}
+
+
+
+</code></pre>
 
 </div>
 

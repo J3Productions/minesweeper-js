@@ -1,27 +1,26 @@
 {
-  "coverage": "87.5%",
-  "expectCount": 32,
-  "actualCount": 28,
+  "coverage": "78.37%",
+  "expectCount": 37,
+  "actualCount": 29,
   "files": {
     "js/board.js": {
-      "expectCount": 14,
-      "actualCount": 14,
-      "undocumentLines": []
-    },
-    "js/main.js": {
-      "expectCount": 3,
-      "actualCount": 0,
+      "expectCount": 18,
+      "actualCount": 15,
       "undocumentLines": [
-        14,
-        31,
-        36
+        369,
+        750,
+        754
       ]
     },
-    "js/test.js": {
-      "expectCount": 1,
+    "js/main.js": {
+      "expectCount": 5,
       "actualCount": 0,
       "undocumentLines": [
-        4
+        4,
+        15,
+        29,
+        70,
+        120
       ]
     },
     "js/tile.js": {

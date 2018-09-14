@@ -12,6 +12,30 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "./js/main.js~boardgen",
+    "function/index.html#static-function-boardGen",
+    "<span>boardGen</span> <span class=\"search-result-import-path\">./js/main.js</span>",
+    "function"
+  ],
+  [
+    "./js/main.js~checkminesinput",
+    "function/index.html#static-function-checkMinesInput",
+    "<span>checkMinesInput</span> <span class=\"search-result-import-path\">./js/main.js</span>",
+    "function"
+  ],
+  [
+    "./js/main.js~leftclick",
+    "function/index.html#static-function-leftClick",
+    "<span>leftClick</span> <span class=\"search-result-import-path\">./js/main.js</span>",
+    "function"
+  ],
+  [
+    "./js/main.js~rightclick",
+    "function/index.html#static-function-rightClick",
+    "<span>rightClick</span> <span class=\"search-result-import-path\">./js/main.js</span>",
+    "function"
+  ],
+  [
     "js/.external-ecmascript.js~array",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "js/.external-ecmascript.js~Array",
@@ -324,6 +348,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "js/board.js~board#gettileadj",
+    "class/js/board.js~Board.html#instance-method-getTileAdj",
+    "js/board.js~Board#getTileAdj",
+    "method"
+  ],
+  [
+    "js/board.js~board#istilerevealed",
+    "class/js/board.js~Board.html#instance-method-isTileRevealed",
+    "js/board.js~Board#isTileRevealed",
+    "method"
+  ],
+  [
     "js/board.js~board#loser",
     "class/js/board.js~Board.html#instance-member-loser",
     "js/board.js~Board#loser",
@@ -336,9 +372,21 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "js/board.js~board#minesnotflagged",
+    "class/js/board.js~Board.html#instance-member-minesNotFlagged",
+    "js/board.js~Board#minesNotFlagged",
+    "member"
+  ],
+  [
     "js/board.js~board#minestotal",
     "class/js/board.js~Board.html#instance-member-minesTotal",
     "js/board.js~Board#minesTotal",
+    "member"
+  ],
+  [
+    "js/board.js~board#nominetiles",
+    "class/js/board.js~Board.html#instance-member-noMineTiles",
+    "js/board.js~Board#noMineTiles",
     "member"
   ],
   [
@@ -387,12 +435,6 @@ window.esdocSearchIndex = [
     "js/plugins.js",
     "file/js/plugins.js.html",
     "js/plugins.js",
-    "file"
-  ],
-  [
-    "js/test.js",
-    "file/js/test.js.html",
-    "js/test.js",
     "file"
   ],
   [

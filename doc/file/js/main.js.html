@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">js/main.js</title>
+  <title data-ice="title">js/main.js | Minesweeper</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -24,13 +24,17 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-</header>
+<a style="position:relative; top:3px;" href="https://github.com/J3Productions/minesweeper-js"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/js/board.js~Board.html">Board</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/js/tile.js~Tile.html">Tile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-boardGen">boardGen</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkMinesInput">checkMinesInput</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-leftClick">leftClick</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rightClick">rightClick</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -38,6 +42,8 @@
 <div class="content" data-ice="content"><h1 data-ice="title">js/main.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
 import { Board } from &apos;./board.js&apos;
+
+let game = undefined;
 
 //Date: 09/06/2018
 //Version 1, Author: Jielong Cong
@@ -48,9 +54,7 @@ import { Board } from &apos;./board.js&apos;
 //Date: 09/07/2018
 //Version 3, Author: Jielong Cong
 
-
-function checkMinesInput() {
-    &apos;use strict&apos;;
+export function checkMinesInput() {
     let lengthField = document.getElementById(&quot;boardLength&quot;);
     let heightField = document.getElementById(&quot;boardHeight&quot;);
     let minesField = document.getElementById(&quot;minesInput&quot;);
@@ -64,38 +68,35 @@ function checkMinesInput() {
     }
 }
 
-
-//An Object that record the status of the game.
-var Game = {isWin: false, isLose: false};
-
-
-
-
-function boardGen() {
-	&apos;use strict&apos;;
+export function boardGen() {
 	let lengthField = document.getElementById(&quot;boardLength&quot;);
 	let heightField = document.getElementById(&quot;boardHeight&quot;);
 	let minesField = document.getElementById(&quot;minesInput&quot;);
+    
 
 	if (lengthField.validity.valid == true &amp;&amp; heightField.validity.valid == true &amp;&amp; minesField.validity.valid == true) {
 		let length = lengthField.value;
 		let height = heightField.value;
 		let mines = minesField.value;
+        
+        game = new Board(mines, height, length);
+        game.plantMine();
+        game.plantAdjNum();
 
 		document.getElementById(&quot;gameBoard&quot;).innerHTML = &quot;&quot;;
 
 		for (let i = 0; i &lt; height; i++) {
 			let row = document.createElement(&quot;tr&quot;);
 			for (let j = 0; j &lt; length; j++) {
+				let tileID = (i * length) + j;
 				let cell = document.createElement(&quot;td&quot;);
-				cell.setAttribute(&quot;data-x&quot;, j);
-				cell.setAttribute(&quot;data-y&quot;, i);
+				cell.setAttribute(&quot;id&quot;, tileID);
+				cell.setAttribute(&quot;oncontextmenu&quot;, &quot;return false;&quot;);
 				row.appendChild(cell);
 			}
 			document.getElementById(&quot;gameBoard&quot;).appendChild(row);
 		}
 
-		//createBoard(mines, length, height);
 
 		document.getElementById(&quot;status&quot;).hidden = false;
 		document.getElementById(&quot;startButton&quot;).setAttribute(&quot;class&quot;, &quot;btn btn-danger btn-lg btn-block&quot;);
@@ -106,10 +107,82 @@ function boardGen() {
 	else {
 		window.alert(&quot;One or more of your input fields is invalid. Please check your inputs and try again.&quot;);
 	}
-
-
 }
-</code></pre>
+
+export function leftClick() {
+	let clicked = event.target;
+	let cellID = Number(clicked.getAttribute(&quot;id&quot;));
+	let flags = document.getElementById(&quot;flagsPlaced&quot;).innerHTML;
+	if (game.loser || game.winner) {
+		window.alert(&quot;The game is over! Care to try again?&quot;);
+		return;
+	}
+	
+	//[row, column]
+	let coord = [Math.floor(cellID / game.rows), (cellID % game.columns)];
+	if (game.isTileRevealed(coord[0], coord[1]) == false)  {
+		game.clickReveal(coord[0], coord[1]);
+	}
+	else {
+		return;
+	}
+	
+	if (game.loser == true) {
+		game.showAllMine();
+		for (let i = 0; i &lt; game.rows; i++) {
+			for (let j = 0; j &lt; game.columns; j++) {
+				let cID = (i * game.columns) + j;
+				if (game.getTileAdj(i, j) == 9) {
+					document.getElementById(cID).innerHTML = &quot;X&quot;;
+				}
+				clicked.setAttribute(&quot;style&quot;, &quot;color: red;&quot;);
+			}
+		}
+		window.alert(&quot;KABLOOEY! Game over! Care to try again?&quot;);
+	}
+	else if (game.getTileAdj(coord[0], coord[1]) &gt;= 1 &amp;&amp; game.getTileAdj(coord[0], coord[1]) &lt;= 8) {
+		clicked.innerHTML = game.getTileAdj(coord[0], coord[1]);
+	}
+	//This part doesn&apos;t quite work yet, need to figure out the problem here
+	else {
+		for (let i = 0; i &lt; game.rows; i++) {
+			for (let j = 0; j &lt; game.columns; j++) {
+				let cID = (i * game.columns) + j;
+				if (game.isTileRevealed(i, j)) {
+					document.getElementById(cID).innerHTML = game.getTileAdj(i, j);
+					if (game.getTileAdj(i, j) == 0) {
+						document.getElementById(cID).innerHTML = &quot;&quot;;
+					}
+				}
+			}
+		}
+	}
+}
+
+export function rightClick() {
+	let clicked = event.target;
+	let cellID = Number(clicked.getAttribute(&quot;id&quot;));
+	let flags = document.getElementById(&quot;flagsPlaced&quot;).innerHTML;
+	if (game.loser || game.winner) {
+		window.alert(&quot;The game is over! Care to try again?&quot;);
+		return;
+	}
+	
+	//[row, column]
+	let coord = [Math.floor(cellID / game.rows), (cellID % game.columns)];
+	let flagTile = game.setFlag(coord[0], coord[1]);
+	
+	if (flagTile) {
+		clicked.innerHTML = &quot;&amp;#9873;&quot;;
+		flags++;
+	}
+	else {
+		clicked.innerHTML = &quot;&quot;;
+		flags--;
+	}
+	
+	document.getElementById(&quot;flagsPlaced&quot;).innerHTML = flags;
+}</code></pre>
 
 </div>
 

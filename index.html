@@ -80,10 +80,12 @@
 		<script src="js/plugins.js"></script>
 		<script src="js/main.js" type="module"></script>
         <script type="module">
-            import { checkMinesInput, boardGen } from '/js/main.js';
+            import { checkMinesInput, boardGen, leftClick, rightClick } from './js/main.js';
             document.getElementById("boardLength").addEventListener("change", checkMinesInput);
             document.getElementById("boardHeight").addEventListener("change", checkMinesInput);
             document.getElementById("startButton").addEventListener("click", boardGen);
+			document.getElementById("gameBoard").addEventListener("click", leftClick);
+			document.getElementById("gameBoard").addEventListener("contextmenu", rightClick);
         </script>
 	</body>
 

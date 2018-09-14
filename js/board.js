@@ -15,15 +15,15 @@ export class Board {
     constructor(numMines, rows, columns) {
         /** Number of rows (height) on the board. Range: 2-50
 		* @type {number} */
-        this.rows = rows;
+        this.rows = Number(rows);
 
         /** Number of columns (length) on the board. Range: 2-50
 		* @type {number} */
-        this.columns = columns;
+        this.columns = Number(columns);
 
         /** Number of mines on the board. Range: 1-2499 (Depending on board size)
 		* @type {number} */
-        this.minesTotal = numMines;
+        this.minesTotal = Number(numMines);
 
         /** 2D array storing all tile objects on the board.
 		* @type {Tile[]} */
@@ -335,6 +335,7 @@ export class Board {
 	* This function change one tile's flagged status.
 	* @param {number} row Row of tile being flagged.
 	* @param {number} column Column of tile being flagged.
+	* @return {boolean} The status of the tile - true for flagged, false for not flagged
 	*/
     setFlag(row, column) {
         if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false)
@@ -345,16 +346,20 @@ export class Board {
             */
             if(this.arr[row][column].isMine == true)
                 this.minesNotFlagged == this.minesNotFlagged - 1;
+			
+			return true;
         }
             //If they already have flagged and want to remove the flag.
         else if(this.arr[row][column].flagged== true && this.arr[row][column].getRevealed()== false)
         {
-            this.arr[row][column].flagged== false;//Remove flag
+            this.arr[row][column].flagged= false;//Remove flag
             /**
 			*@desc increase how many mines are left without a flag.
 			*/
             if(this.arr[row][column].isMine == true)
                 this.minesNotFlagged == this.minesNotFlagged + 1;
+			
+			return false;
         }
     }
 
@@ -741,6 +746,14 @@ export class Board {
             }
         }
     }
+
+	isTileRevealed(row, column) {
+		return this.arr[row][column].revealed;
+	}
+	
+	getTileAdj(row, column) {
+		return this.arr[row][column].getAdjacent();
+	}
 }
 
 
