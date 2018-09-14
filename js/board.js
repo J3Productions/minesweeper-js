@@ -45,6 +45,10 @@ export class Board {
 		*@type {number}*/
         this.minesNotFlagged = numMines;
 
+        /** Variable to keep track of  number of  flags.
+		*@type {number}*/
+        this.numFlags = numMines;
+
         /** Variable to keep track of tiles without a mine in it.
 		*@type {number}*/
         this.noMineTiles = ((rows * columns) - numMines);
@@ -332,33 +336,39 @@ export class Board {
     }
 
     /**
-	* This function change one tile's flagged status.
+	* This function change one tile's flagged status, and changes the number of flags
 	* @param {number} row Row of tile being flagged.
 	* @param {number} column Column of tile being flagged.
 	* @return {boolean} The status of the tile - true for flagged, false for not flagged
 	*/
     setFlag(row, column) {
-        if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false)
+        if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false && this.numFlags > 0)
         {
             this.arr[row][column].flagged= true;
+            this.numFlags = this.numFlags -1;
             /**
             *@desc decrease how many mines are left without a flag.
             */
             if(this.arr[row][column].isMine == true)
-                this.minesNotFlagged == this.minesNotFlagged - 1;
-			
+                this.minesNotFlagged = this.minesNotFlagged - 1;
+
+            if(this.minesNotFlagged == 0 && this.numFlags == 0)
+            this.winner = true;
 			return true;
         }
             //If they already have flagged and want to remove the flag.
         else if(this.arr[row][column].flagged== true && this.arr[row][column].getRevealed()== false)
         {
             this.arr[row][column].flagged= false;//Remove flag
+            this.numFlags = this.numFlags + 1;
             /**
 			*@desc increase how many mines are left without a flag.
 			*/
             if(this.arr[row][column].isMine == true)
-                this.minesNotFlagged == this.minesNotFlagged + 1;
-			
+                this.minesNotFlagged = this.minesNotFlagged + 1;
+
+            if(this.minesNotFlagged == 0 && this.numFlags == 0)
+            this.winner = true;
 			return false;
         }
     }
@@ -754,11 +764,8 @@ export class Board {
         //var test = this.arr[row][column].revealed;
 		return this.arr[row][column].revealed;
 	}
-	
+
 	getTileAdj(row, column) {
 		return this.arr[row][column].getAdjacent();
 	}
 }
-
-
-
