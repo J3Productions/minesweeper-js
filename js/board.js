@@ -345,6 +345,7 @@ export class Board {
         if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false && this.numFlags > 0)
         {
             this.arr[row][column].flagged= true;
+            if(this.numFlags > 0)
             this.numFlags = this.numFlags -1;
             /**
             *@desc decrease how many mines are left without a flag.
