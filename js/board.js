@@ -400,14 +400,20 @@ export class Board {
 
             if (this.arr[i][j].adjNum > 0 && this.arr[i][j].adjNum < 9) {
                 if (this.arr[i][j].revealed == false) {
+                    if(this.arr[i][j].flagged == true)
+                    {
+                        this.setFlag(i, j);
+                    }
                     this.arr[i][j].revealed = true;
-                    this.arr[i][j].flagged = false;
                 }
             }
             else if (this.arr[i][j].adjNum == 0) {
                 if (this.arr[i][j].revealed == false) {
+                    if(this.arr[i][j].flagged == true)
+                    {
+                        this.setFlag(i, j);
+                    }
                     this.arr[i][j].revealed = true;
-                    this.arr[i][j].flagged = false;
 
                     if (i > 0 && j > 0 && i < this.arr.length - 1 && j < this.arr[i].length - 1) {
                         //Upper left block check.
@@ -415,64 +421,96 @@ export class Board {
                             self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j - 1));
+                            }
+
                             this.arr[(i - 1)][(j - 1)].revealed = true;
-                            this.arr[(i - 1)][(j - 1)].flagged = false;
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
                             self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), j);
+                            }
+
                             this.arr[(i - 1)][j].revealed = true;
-                            this.arr[(i - 1)][j].flagged = false;
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j + 1));
+                            }
+                            
                             this.arr[(i - 1)][(j + 1)].revealed = true;
-                            this.arr[(i - 1)][(j + 1)].flagged = false;
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
                             self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j - 1));
+                            }
+                            
                             this.arr[i][(j - 1)].revealed = true;
-                            this.arr[i][(j - 1)].flagged = false;
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
                             self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j + 1));
+                            }
+                            
                             this.arr[i][(j + 1)].revealed = true;
-                            this.arr[i][(j + 1)].flagged = false;
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j - 1));
+                            }
+                            
                             this.arr[(i + 1)][(j - 1)].revealed = true;
-                            this.arr[(i + 1)][(j - 1)].flagged = false;
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
                             self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), j);
+                            }
+                            
                             this.arr[(i + 1)][j].revealed = true;
-                            this.arr[(i + 1)][j].flagged = false;
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j + 1));
                         }
                         else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j + 1));
+                            }
+                            
                             this.arr[(i + 1)][(j + 1)].revealed = true;
-                            this.arr[(i + 1)][(j + 1)].flagged = false;
                         }
                     }
                         //check speical left column without two corner blocks							//fixed
@@ -482,36 +520,60 @@ export class Board {
                             self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), j);
+                            }
+
                             this.arr[(i - 1)][j].revealed = true;
-                            this.arr[(i - 1)][j].flagged = false;
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j + 1));
+                            }
+                            
                             this.arr[(i - 1)][(j + 1)].revealed = true;
-                            this.arr[(i - 1)][(j + 1)].flagged = false;
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
                             self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j + 1));
+                            }
+                            
                             this.arr[i][(j + 1)].revealed = true;
-                            this.arr[i][(j + 1)].flagged = false;
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
                             self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), j);
+                            }
+                            
                             this.arr[(i + 1)][j].revealed = true;
-                            this.arr[(i + 1)][j].flagged = false;
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j + 1));
+                        }
+                        else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j + 1));
+                            }
+                            
+                            this.arr[(i + 1)][(j + 1)].revealed = true;
                         }
                     }
                         //check speical Lower row
@@ -522,40 +584,60 @@ export class Board {
                             self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j - 1));
+                            }
+
                             this.arr[(i - 1)][(j - 1)].revealed = true;
-                            this.arr[(i - 1)][(j - 1)].flagged = false;
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
                             self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), j);
+                            }
+
                             this.arr[(i - 1)][j].revealed = true;
-                            this.arr[(i - 1)][j].flagged = false;
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j + 1));
+                            }
+                            
                             this.arr[(i - 1)][(j + 1)].revealed = true;
-                            this.arr[(i - 1)][(j + 1)].flagged = false;
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
                             self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j - 1));
+                            }
+                            
                             this.arr[i][(j - 1)].revealed = true;
-                            this.arr[i][(j - 1)].flagged = false;
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
                             self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j + 1));
+                            }
+                            
                             this.arr[i][(j + 1)].revealed = true;
-                            this.arr[i][(j + 1)].flagged = false;
                         }
                     }
                         //check speical right column
@@ -566,41 +648,60 @@ export class Board {
                             self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j - 1));
+                            }
+
                             this.arr[(i - 1)][(j - 1)].revealed = true;
-                            this.arr[(i - 1)][(j - 1)].flagged = false;
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
                             self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), j);
+                            }
+
                             this.arr[(i - 1)][j].revealed = true;
-                            this.arr[(i - 1)][j].flagged = false;
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
                             self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j - 1));
+                            }
+                            
                             this.arr[i][(j - 1)].revealed = true;
-                            this.arr[i][(j - 1)].flagged = false;
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j - 1));
+                            }
+                            
                             this.arr[(i + 1)][(j - 1)].revealed = true;
-                            this.arr[(i + 1)][(j - 1)].flagged = false;
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
-
                             self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), j);
+                            }
+                            
                             this.arr[(i + 1)][j].revealed = true;
-                            this.arr[(i + 1)][j].flagged = false;
                         }
                     }
                         //check speical Upper row												//fixed
@@ -610,40 +711,60 @@ export class Board {
                             self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j - 1));
+                            }
+                            
                             this.arr[i][(j - 1)].revealed = true;
-                            this.arr[i][(j - 1)].flagged = false;
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
                             self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j + 1));
+                            }
+                            
                             this.arr[i][(j + 1)].revealed = true;
-                            this.arr[i][(j + 1)].flagged = false;
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j - 1));
+                            }
+                            
                             this.arr[(i + 1)][(j - 1)].revealed = true;
-                            this.arr[(i + 1)][(j - 1)].flagged = false;
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
                             self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), j);
+                            }
+                            
                             this.arr[(i + 1)][j].revealed = true;
-                            this.arr[(i + 1)][j].flagged = false;
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j + 1));
                         }
                         else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j + 1));
+                            }
+                            
                             this.arr[(i + 1)][(j + 1)].revealed = true;
-                            this.arr[(i + 1)][(j + 1)].flagged = false;
                         }
                     }
                         //Upper left corner
@@ -653,24 +774,36 @@ export class Board {
                             self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j + 1));
+                            }
+                            
                             this.arr[i][(j + 1)].revealed = true;
-                            this.arr[i][(j + 1)].flagged = false;
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
                             self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), j);
+                            }
+                            
                             this.arr[(i + 1)][j].revealed = true;
-                            this.arr[(i + 1)][j].flagged = false;
                         }
                         //Lower right block check.
                         if (this.arr[(i + 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j + 1));
                         }
                         else if (this.arr[(i + 1)][(j + 1)].adjNum < 9 && this.arr[(i + 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j + 1));
+                            }
+                            
                             this.arr[(i + 1)][(j + 1)].revealed = true;
-                            this.arr[(i + 1)][(j + 1)].flagged = false;
                         }
                     }
                         //Upper right corner
@@ -680,24 +813,36 @@ export class Board {
                             self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j - 1));
+                            }
+                            
                             this.arr[i][(j - 1)].revealed = true;
-                            this.arr[i][(j - 1)].flagged = false;
                         }
                         //Lower left block check.
                         if (this.arr[(i + 1)][(j - 1)].adjNum == 0) {
                             self.clickReveal((i + 1), (j - 1));
                         }
                         else if (this.arr[(i + 1)][(j - 1)].adjNum < 9 && this.arr[(i + 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), (j - 1));
+                            }
+                            
                             this.arr[(i + 1)][(j - 1)].revealed = true;
-                            this.arr[(i + 1)][(j - 1)].flagged = false;
                         }
                         //Lower block check.
                         if (this.arr[(i + 1)][j].adjNum == 0) {
                             self.clickReveal((i + 1), j);
                         }
                         else if (this.arr[(i + 1)][j].adjNum < 9 && this.arr[(i + 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i + 1), j);
+                            }
+                            
                             this.arr[(i + 1)][j].revealed = true;
-                            this.arr[(i + 1)][j].flagged = false;
                         }
                     }
                         //Lower left corner
@@ -707,24 +852,36 @@ export class Board {
                             self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), j);
+                            }
+
                             this.arr[(i - 1)][j].revealed = true;
-                            this.arr[(i - 1)][j].flagged = false;
                         }
                         //Upper right block check.
                         if (this.arr[(i - 1)][(j + 1)].adjNum == 0) {
                             self.clickReveal((i - 1), (j + 1));
                         }
                         else if (this.arr[(i - 1)][(j + 1)].adjNum < 9 && this.arr[(i - 1)][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j + 1));
+                            }
+                            
                             this.arr[(i - 1)][(j + 1)].revealed = true;
-                            this.arr[(i - 1)][(j + 1)].flagged = false;
                         }
                         //Right block check.
                         if (this.arr[i][(j + 1)].adjNum == 0) {
                             self.clickReveal(i, (j + 1));
                         }
                         else if (this.arr[i][(j + 1)].adjNum < 9 && this.arr[i][(j + 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j + 1));
+                            }
+                            
                             this.arr[i][(j + 1)].revealed = true;
-                            this.arr[i][(j + 1)].flagged = false;
                         }
                     }
                         //Lower right corner
@@ -734,24 +891,36 @@ export class Board {
                             self.clickReveal((i - 1), (j - 1));
                         }
                         else if (this.arr[(i - 1)][(j - 1)].adjNum < 9 && this.arr[(i - 1)][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), (j - 1));
+                            }
+
                             this.arr[(i - 1)][(j - 1)].revealed = true;
-                            this.arr[(i - 1)][(j - 1)].flagged = false;
                         }
                         //Upper block check.
                         if (this.arr[(i - 1)][j].adjNum == 0) {
                             self.clickReveal((i - 1), j);
                         }
                         else if (this.arr[(i - 1)][j].adjNum < 9 && this.arr[(i - 1)][j].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag((i - 1), j);
+                            }
+
                             this.arr[(i - 1)][j].revealed = true;
-                            this.arr[(i - 1)][j].flagged = false;
                         }
                         //left block check.
                         if (this.arr[i][(j - 1)].adjNum == 0) {
                             self.clickReveal(i, (j - 1));
                         }
                         else if (this.arr[i][(j - 1)].adjNum < 9 && this.arr[i][(j - 1)].revealed == false) {
+                            if(this.arr[i][j].flagged == true)
+                            {
+                                this.setFlag(i, (j - 1));
+                            }
+                            
                             this.arr[i][(j - 1)].revealed = true;
-                            this.arr[i][(j - 1)].flagged = false;
                         }
                     }
                 }
