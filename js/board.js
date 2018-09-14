@@ -336,7 +336,7 @@ export class Board {
     }
 
     /**
-	* This function change one tile's flagged status, and changes the number of flags
+	* This function changes one tile's flagged status, changes the number of flags and sets winner to true if all flags have been placed on all mines.
 	* @param {number} row Row of tile being flagged.
 	* @param {number} column Column of tile being flagged.
 	* @return {boolean} The status of the tile - true for flagged, false for not flagged
@@ -345,15 +345,15 @@ export class Board {
         if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false && this.numFlags > 0)
         {
             this.arr[row][column].flagged= true;
+            if(this.numFlags > 0)
             this.numFlags = this.numFlags -1;
             /**
             *@desc decrease how many mines are left without a flag.
             */
             if(this.arr[row][column].isMine == true)
                 this.minesNotFlagged = this.minesNotFlagged - 1;
-
             if(this.minesNotFlagged == 0 && this.numFlags == 0)
-            this.winner = true;
+            this.winner = true;//Check if all mines are flagged
 			return true;
         }
             //If they already have flagged and want to remove the flag.
@@ -362,13 +362,13 @@ export class Board {
             this.arr[row][column].flagged= false;//Remove flag
             this.numFlags = this.numFlags + 1;
             /**
-			*@desc increase how many mines are left without a flag.
+			*@desc increase how many mines are left without a flag if player removes flag from a mine.
 			*/
             if(this.arr[row][column].isMine == true)
                 this.minesNotFlagged = this.minesNotFlagged + 1;
 
             if(this.minesNotFlagged == 0 && this.numFlags == 0)
-            this.winner = true;
+            this.winner = true;//Check if all mines are flagged
 			return false;
         }
     }
