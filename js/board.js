@@ -339,7 +339,7 @@ export class Board {
 	* This function changes one tile's flagged status, changes the number of flags and sets winner to true if all flags have been placed on all mines.
 	* @param {number} row Row of tile being flagged.
 	* @param {number} column Column of tile being flagged.
-	* @return {boolean} The status of the tile - true for flagged, false for not flagged
+	* @return {boolean|null} The status of the tile - true for flagged, false for not flagged, null if nothing can be done
 	*/
     setFlag(row, column) {
 		//Executes if tile is not currently flagged, revealed, and there are enough flags to place

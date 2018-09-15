@@ -1,6 +1,10 @@
 'use strict';
 import { Board } from './board.js'
 
+/**
+ * Global game object that Main interfaces with
+ * @type {Board}
+ */
 let game = undefined;
 
 //Date: 09/06/2018

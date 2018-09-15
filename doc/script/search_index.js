@@ -390,6 +390,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "js/board.js~board#numflags",
+    "class/js/board.js~Board.html#instance-member-numFlags",
+    "js/board.js~Board#numFlags",
+    "member"
+  ],
+  [
     "js/board.js~board#plantadjnum",
     "class/js/board.js~Board.html#instance-method-plantAdjNum",
     "js/board.js~Board#plantAdjNum",

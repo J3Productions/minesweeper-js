@@ -43,6 +43,10 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
 import { Board } from &apos;./board.js&apos;
 
+/**
+ * Global game object that Main interfaces with
+ * @type {Board}
+ */
 let game = undefined;
 
 //Date: 09/06/2018
@@ -115,43 +119,49 @@ export function leftClick() {
 	let flags = document.getElementById(&quot;flagsPlaced&quot;).innerHTML;
 	if (game.loser || game.winner) {
 		window.alert(&quot;The game is over! Care to try again?&quot;);
-		return;
+		return null;
 	}
 	
 	//[row, column]
-	let coord = [Math.floor(cellID / game.rows), (cellID % game.columns)];
+	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	if (game.isTileRevealed(coord[0], coord[1]) == false)  {
 		game.clickReveal(coord[0], coord[1]);
 	}
 	else {
-		return;
+		return null;
 	}
 	
 	if (game.loser == true) {
 		game.showAllMine();
+		clicked.setAttribute(&quot;style&quot;, &quot;color: red;&quot;);
 		for (let i = 0; i &lt; game.rows; i++) {
 			for (let j = 0; j &lt; game.columns; j++) {
 				let cID = (i * game.columns) + j;
 				if (game.getTileAdj(i, j) == 9) {
 					document.getElementById(cID).innerHTML = &quot;X&quot;;
 				}
-				clicked.setAttribute(&quot;style&quot;, &quot;color: red;&quot;);
 			}
 		}
-		window.alert(&quot;KABLOOEY! Game over! Care to try again?&quot;);
+		$(function(){
+			$(&apos;#game-over&apos;).modal(&apos;show&apos;);
+		});
 	}
 	else if (game.getTileAdj(coord[0], coord[1]) &gt;= 1 &amp;&amp; game.getTileAdj(coord[0], coord[1]) &lt;= 8) {
+		clicked.setAttribute(&quot;style&quot;, &quot;color: blue;&quot;);
 		clicked.innerHTML = game.getTileAdj(coord[0], coord[1]);
 	}
-	//This part doesn&apos;t quite work yet, need to figure out the problem here
 	else {
 		for (let i = 0; i &lt; game.rows; i++) {
 			for (let j = 0; j &lt; game.columns; j++) {
 				let cID = (i * game.columns) + j;
 				if (game.isTileRevealed(i, j)) {
-					document.getElementById(cID).innerHTML = game.getTileAdj(i, j);
 					if (game.getTileAdj(i, j) == 0) {
-						document.getElementById(cID).innerHTML = &quot;&quot;;
+						document.getElementById(cID).setAttribute(&quot;style&quot;, &quot;color: gainsboro;&quot;);
+						document.getElementById(cID).innerHTML = &quot;0&quot;;
+					}
+					else {
+						document.getElementById(cID).setAttribute(&quot;style&quot;, &quot;color: blue;&quot;);
+						document.getElementById(cID).innerHTML = game.getTileAdj(i, j);
 					}
 				}
 			}
@@ -165,20 +175,29 @@ export function rightClick() {
 	let flags = document.getElementById(&quot;flagsPlaced&quot;).innerHTML;
 	if (game.loser || game.winner) {
 		window.alert(&quot;The game is over! Care to try again?&quot;);
-		return;
+		return null;
 	}
 	
 	//[row, column]
-	let coord = [Math.floor(cellID / game.rows), (cellID % game.columns)];
+	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	let flagTile = game.setFlag(coord[0], coord[1]);
 	
-	if (flagTile) {
+	if (flagTile == true) {
 		clicked.innerHTML = &quot;&amp;#9873;&quot;;
 		flags++;
 	}
-	else {
+	else if (flagTile == false) {
 		clicked.innerHTML = &quot;&quot;;
 		flags--;
+	}
+	else {
+		return null;
+	}
+	
+	if (game.winner == true) {
+		$(function(){
+			$(&apos;#winner&apos;).modal(&apos;show&apos;);
+		});
 	}
 	
 	document.getElementById(&quot;flagsPlaced&quot;).innerHTML = flags;
