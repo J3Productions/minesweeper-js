@@ -342,6 +342,7 @@ export class Board {
 	* @return {boolean} The status of the tile - true for flagged, false for not flagged
 	*/
     setFlag(row, column) {
+		//Executes if tile is not currently flagged, revealed, and there are enough flags to place
         if(this.arr[row][column].flagged== false && this.arr[row][column].getRevealed()== false && this.numFlags > 0)
         {
             this.arr[row][column].flagged= true;
@@ -357,7 +358,7 @@ export class Board {
 
 			return true;
         }
-            //If they already have flagged and want to remove the flag.
+        //Executes if they already have flagged and want to remove the flag.
         else if(this.arr[row][column].flagged== true && this.arr[row][column].getRevealed()== false)
         {
             this.arr[row][column].flagged= false;//Remove flag
@@ -373,6 +374,10 @@ export class Board {
 
 			return false;
         }
+		//Executes if all the flags have been used or the tile has already been revealed
+		else {
+			return null;
+		}
     }
 
     /*
@@ -393,7 +398,12 @@ export class Board {
 	*/
     clickReveal(i, j) {
 
-        var self = this;
+        let self = this;
+		
+		//Prevent the user from revealing the tile if it is flagged or if it is already revealed
+		if (this.arr[i][j].flagged == true || this.arr[i][j].revealed == true) {
+			return null;
+		}
 
         if (this.arr[i][j].getMine() == true) {
             this.arr[i][j].revealed = true;

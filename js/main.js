@@ -136,13 +136,16 @@ export function rightClick() {
 	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	let flagTile = game.setFlag(coord[0], coord[1]);
 	
-	if (flagTile) {
+	if (flagTile == true) {
 		clicked.innerHTML = "&#9873;";
 		flags++;
 	}
-	else {
+	else if (flagTile == false) {
 		clicked.innerHTML = "";
 		flags--;
+	}
+	else {
+		return null;
 	}
 	
 	if (game.winner == true) {
