@@ -33,7 +33,7 @@
 				It is recommended that you play Minesweeper! on a larger display.
 			</div>
 			<h1>Minesweeper!</h1>
-			<h2>How to Play</h2>
+			<h4>How to Play</h4>
 			<p>The objective of the game is to clear the field of mines without setting any off. To begin, select the size of the field and the number of mines in the field, and click "Start." To examine a section of the field, click on it, and it will reveal one of three things:</p>
 			<ol>
 				<li>A number, indicating the number of mines adjacent to the tile.</li>
@@ -41,7 +41,7 @@
 				<li>A mine, indicating KABOOM! You're dead, game over!</li>
 			</ol>
 			<p>Flags can be used to mark spots where mines are believed to be. To place a flag, right click on an unrevealed tile. Flag all of the mines without flagging any non-mines to win the game!
-			<form id="userInput">
+			<form id="userInput" class="needs-validation">
 				<div class="row align-items-end">
 					<div class="col-sm-6 col-md-4">
 						<div class="form-group">
@@ -78,7 +78,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Game Over!</h5>
+						<h4 class="modal-title">Game Over!</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -97,7 +97,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">You're Winner!</h5>
+						<h4 class="modal-title">You're Winner!</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -111,6 +111,53 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal fade" id="validation" tabindex="-1" role="dialog" aria-labelledby="validation-modal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">You Are Error!</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						DANG IT! One or more of your input fields is filled in incorrectly! You think this is just some sort of game?! Check the highlighted fields and try again!
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="reset-game" tabindex="-1" role="dialog" aria-labelledby="reset-modal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">No Game Here!</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						WHOOPS! The game is already over! Where's the fun in playing a game where you already know how to win?! To start a new game, just click Reset!
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<footer>
+			<div class="container">
+				<hr>
+				Created by <a href="https://github.com/J3Productions">J3 Productions</a> for EECS 448
+				<br>
+				<a href="https://github.com/J3Productions/minesweeper-js">Source</a>/<a href="documentation/index.html">Documentation</a>
+			</div>
+		</footer>
 
 
 		<script src="js/vendor/modernizr-3.6.0.min.js"></script>

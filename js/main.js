@@ -35,6 +35,10 @@ export function boardGen() {
 	let lengthField = document.getElementById("boardLength");
 	let heightField = document.getElementById("boardHeight");
 	let minesField = document.getElementById("minesInput");
+	
+	lengthField.setAttribute("class", "form-control");
+	heightField.setAttribute("class", "form-control");
+	minesField.setAttribute("class", "form-control");
     
 
 	if (lengthField.validity.valid == true && heightField.validity.valid == true && minesField.validity.valid == true) {
@@ -68,7 +72,18 @@ export function boardGen() {
 		document.getElementById("minesOnBoard").innerHTML = mines;
 	}
 	else {
-		window.alert("One or more of your input fields is invalid. Please check your inputs and try again.");
+		if (lengthField.validity.valid == false) {
+			lengthField.setAttribute("class", "form-control is-invalid");
+		}
+		if (heightField.validity.valid == false) {
+			heightField.setAttribute("class", "form-control is-invalid");
+		}
+		if (minesField.validity.valid == false) {
+			minesField.setAttribute("class", "form-control is-invalid");
+		}
+		$(function(){
+			$('#validation').modal('show');
+		});
 	}
 }
 
@@ -83,7 +98,9 @@ export function leftClick(clicked) {
 	let cellID = Number(clicked.getAttribute("id"));
 	let flags = document.getElementById("flagsPlaced").innerHTML;
 	if (game.loser || game.winner) {
-		window.alert("The game is over! Care to try again?");
+		$(function(){
+			$('#reset-game').modal('show');
+		});
 		return null;
 	}
 	
@@ -148,7 +165,9 @@ export function rightClick(clicked) {
 	let cellID = Number(clicked.getAttribute("id"));
 	let flags = document.getElementById("flagsPlaced").innerHTML;
 	if (game.loser || game.winner) {
-		window.alert("The game is over! Care to try again?");
+		$(function(){
+			$('#reset-game').modal('show');
+		});
 		return null;
 	}
 	
