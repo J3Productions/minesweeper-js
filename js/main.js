@@ -71,8 +71,7 @@ export function boardGen() {
 	}
 }
 
-export function leftClick() {
-	let clicked = event.target;
+export function leftClick(clicked) {
 	let cellID = Number(clicked.getAttribute("id"));
 	let flags = document.getElementById("flagsPlaced").innerHTML;
 	if (game.loser || game.winner) {
@@ -130,8 +129,7 @@ export function leftClick() {
 	document.getElementById("flagsPlaced").innerHTML = flags;
 }
 
-export function rightClick() {
-	let clicked = event.target;
+export function rightClick(clicked) {
 	let cellID = Number(clicked.getAttribute("id"));
 	let flags = document.getElementById("flagsPlaced").innerHTML;
 	if (game.loser || game.winner) {

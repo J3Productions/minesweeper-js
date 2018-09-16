@@ -125,8 +125,12 @@
             document.getElementById("boardLength").addEventListener("change", checkMinesInput);
             document.getElementById("boardHeight").addEventListener("change", checkMinesInput);
             document.getElementById("startButton").addEventListener("click", boardGen);
-			document.getElementById("gameBoard").addEventListener("click", leftClick);
-			document.getElementById("gameBoard").addEventListener("contextmenu", rightClick);
+			document.getElementById("gameBoard").addEventListener("click", function(event) {
+    			leftClick(event.target);
+			});
+			document.getElementById("gameBoard").addEventListener("contextmenu", function(event) {
+    			rightClick(event.target);
+			});
         </script>
 	</body>
 
