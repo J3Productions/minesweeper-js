@@ -5,6 +5,7 @@
 export class Tile {
 	/**
 	* Constructor creates a tile that stores whether the tile is a mine or not, the number of mines adjacent to it, and whether the tile has been flagged or not.
+	* POSTCONDITION: isMine, adjNum, flagged, and revealed, all now have set values.
 	*/
 	constructor() {
 		/**
@@ -62,16 +63,16 @@ export class Tile {
 	}
 	
 	/**
-	* Sets the tile's status to be a mine
-	* Post: isMine is true
+	* Sets the tile's status to be a mine.
+	* POSTCONDITION: isMine is true.
 	*/
 	setMine() {
 		this.isMine = true;
 	}
 	
 	/**
-	* Sets the number of mines adjacent to the tile
-	* Post: adjNum could be anywhere from 0 to 8
+	* Sets the number of mines adjacent to the tile.
+	* POSTCONDITION: adjNum could be anywhere from 0 to 8
 	* @param {number} adj Number of mine adjacent to this tile, retrieved from plantAdjNum()
 	*/
 	setAdjacent(adj) {
@@ -80,7 +81,7 @@ export class Tile {
 	
 	/**
 	* Reverses the flag status of the tile. If it has been flagged, set to false. If it has not, set to true.
-	* Post: flagged is inverted
+	* POSTCONDTION: flagged is inverted
 	*/
 	flag() {
 		if (this.flagged) {
@@ -92,8 +93,8 @@ export class Tile {
 	}
 	
 	/**
-	* Reveals the tile, setting it to true.
-	* Post: revealed is true.
+	* Reveals the tile, setting revealed to true.
+	* POSTCONDTION: revealed is true.
 	*/
 	reveal() {
 		this.revealed = true;

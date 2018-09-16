@@ -8,20 +8,22 @@ import { Tile } from './tile.js';
 export class Board {
     /**
 	* Constructor creates a board, setting all necessary variables and creating a 2D array to store the tiles based on user input.
+	* PRECONDITION: rows, columns, and numMines are within the correct ranges
+	* POSTCONDITION: arr is now populated with tiles; rows, columns, minesTotal, winner, loser, minesNotFlagged, numFlags, noMineTiles, all have set values.
 	* @param {number} numMines Number of mines on the board.
 	* @param {number} rows Number of rows (height) on the board.
 	* @param {number} columns Number of columns (length) on the board.
 	*/
     constructor(numMines, rows, columns) {
-        /** Number of rows (height) on the board. Range: 2-50
+        /** Number of rows (height) on the board. Range: 2-45
 		* @type {number} */
         this.rows = Number(rows);
 
-        /** Number of columns (length) on the board. Range: 2-50
+        /** Number of columns (length) on the board. Range: 2-45
 		* @type {number} */
         this.columns = Number(columns);
 
-        /** Number of mines on the board. Range: 1-2499 (Depending on board size)
+        /** Number of mines on the board. Range: 1-2024 (Depending on board size)
 		* @type {number} */
         this.minesTotal = Number(numMines);
 
@@ -43,7 +45,7 @@ export class Board {
 
         /** Variable to keep track of mines left that haven't been flagged.
 		*@type {number}*/
-        this.minesNotFlagged = numMines;
+        this.minesNotFlagged = this.minesTotal;
 
         /** Variable to keep track of  number of  flags.
 		*@type {number}*/
@@ -65,6 +67,7 @@ export class Board {
 
     /**
 	* This function plant the Mines inside the arr. The Number of Mines are given by player. Using Math.random() to ramdomly plant the Mines.
+	* POSTCONDITION: A number of random tiles specified by minesTotal are now set to be mines.
 	*/
     plantMine() {
         let numMines = this.minesTotal;
@@ -82,6 +85,7 @@ export class Board {
 
     /**
 	* This function change each tile's adjNum.
+	* POSTCONDITION: All tiles that aren't mines have their adjacent number set to the number of mines adjacent to that tile on the game board.
 	*/
     plantAdjNum() {
         for (let i = 0; i < this.rows; i++)
@@ -337,6 +341,8 @@ export class Board {
 
     /**
 	* This function changes one tile's flagged status, changes the number of flags and sets winner to true if all flags have been placed on all mines.
+	* PRECONDITION: The tile is revealed.
+	* POSTCONDITION: The tile clicked on either has a flag or doesn't, numFlags increments or decrements, minesNotFlagged increments or decrements (if a mine was the tile clicked on) and if the conditions are met for winning the game, set winner to true.
 	* @param {number} row Row of tile being flagged.
 	* @param {number} column Column of tile being flagged.
 	* @return {boolean|null} The status of the tile - true for flagged, false for not flagged, null if nothing can be done
@@ -380,8 +386,9 @@ export class Board {
 		}
     }
 
-    /*
-    *When the status of the game is Win or Lose, call this function to reveal all the blocks.
+    /**
+    * When the status of the game is Win or Lose, call this function to reveal all the blocks.
+	* POSTCONDITION: Every tile is set to be revealed.
     */
     showAllMine() {
         for (var i = 0; i < this.arr.length; i++) {
@@ -392,7 +399,8 @@ export class Board {
     }
 
     /**
-	* This is a recursive function. It will execute any one of block on the block been clicked. It will change all the tile's revealed = true, who have number 0. Even the tile set with flagged.
+	* This is a recursive function that will execute any one of block on the block been clicked. It will change all the tile's revealed = true, who have number 0. Even the tile set with flagged.
+	* POSTCONDITION: If a mine was clicked, set loser to true. If a number not 0 was clicked, set just that tile to be revealed. If a 0 was clicked, every adjacent tile not a mine is revealed. All spaces that were flagged that are now revealed are not flagged anymore.
 	* @param {number} i Row property of tile being revealed.
 	* @param {number} j Column property of tile being revealed.
 	*/
@@ -939,11 +947,22 @@ export class Board {
         }
     }
 
+	/**
+	* Checks the revealed status of a tile on the game board specified by the coordinates.
+	* @param {number} row Row coordinate for checked tile.
+	* @param {number} column Column coordinate for checked tile.
+	* @return {boolean} Revealed status of the tile being checked.
+	*/
     isTileRevealed(row, column) {
-        //var test = this.arr[row][column].revealed;
 		return this.arr[row][column].revealed;
 	}
 
+	/**
+	* Finds the number of mines adjacent to the checked tile.
+	* @param {number} row Row coordinate for checked tile.
+	* @param {number} column Column coordinate for checked tile.
+	* @return {boolean} Mines adjacent to the tile being checked.
+	*/
 	getTileAdj(row, column) {
 		return this.arr[row][column].getAdjacent();
 	}
