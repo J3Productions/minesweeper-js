@@ -77,6 +77,10 @@ export function boardGen() {
 	let lengthField = document.getElementById(&quot;boardLength&quot;);
 	let heightField = document.getElementById(&quot;boardHeight&quot;);
 	let minesField = document.getElementById(&quot;minesInput&quot;);
+	
+	lengthField.setAttribute(&quot;class&quot;, &quot;form-control&quot;);
+	heightField.setAttribute(&quot;class&quot;, &quot;form-control&quot;);
+	minesField.setAttribute(&quot;class&quot;, &quot;form-control&quot;);
     
 
 	if (lengthField.validity.valid == true &amp;&amp; heightField.validity.valid == true &amp;&amp; minesField.validity.valid == true) {
@@ -110,7 +114,18 @@ export function boardGen() {
 		document.getElementById(&quot;minesOnBoard&quot;).innerHTML = mines;
 	}
 	else {
-		window.alert(&quot;One or more of your input fields is invalid. Please check your inputs and try again.&quot;);
+		if (lengthField.validity.valid == false) {
+			lengthField.setAttribute(&quot;class&quot;, &quot;form-control is-invalid&quot;);
+		}
+		if (heightField.validity.valid == false) {
+			heightField.setAttribute(&quot;class&quot;, &quot;form-control is-invalid&quot;);
+		}
+		if (minesField.validity.valid == false) {
+			minesField.setAttribute(&quot;class&quot;, &quot;form-control is-invalid&quot;);
+		}
+		$(function(){
+			$(&apos;#validation&apos;).modal(&apos;show&apos;);
+		});
 	}
 }
 
@@ -125,7 +140,9 @@ export function leftClick(clicked) {
 	let cellID = Number(clicked.getAttribute(&quot;id&quot;));
 	let flags = document.getElementById(&quot;flagsPlaced&quot;).innerHTML;
 	if (game.loser || game.winner) {
-		window.alert(&quot;The game is over! Care to try again?&quot;);
+		$(function(){
+			$(&apos;#reset-game&apos;).modal(&apos;show&apos;);
+		});
 		return null;
 	}
 	
@@ -190,7 +207,9 @@ export function rightClick(clicked) {
 	let cellID = Number(clicked.getAttribute(&quot;id&quot;));
 	let flags = document.getElementById(&quot;flagsPlaced&quot;).innerHTML;
 	if (game.loser || game.winner) {
-		window.alert(&quot;The game is over! Care to try again?&quot;);
+		$(function(){
+			$(&apos;#reset-game&apos;).modal(&apos;show&apos;);
+		});
 		return null;
 	}
 	

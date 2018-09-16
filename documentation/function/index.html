@@ -269,11 +269,11 @@ POSTCONDITION: minesInput&apos;s readOnly attribute has been set to true or fals
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/js/main.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/js/main.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {leftClick} from &apos;<span><a href="file/js/main.js.html#lineNumber82">./js/main.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {leftClick} from &apos;<span><a href="file/js/main.js.html#lineNumber97">./js/main.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Run when any tile in the game table is clicked, reveals the tile clicked on. Checks if tile clicked on is unrevealed and if the game is still happening. If not, return null. If so, run <span>clickreveal</span> on the tile, determining its coordinates from the tile&apos;s ID. If the tile is a mine, run <span><a href="class/js/board.js~Board.html#instance-method-showAllMine">showAllMine</a></span>, display all mines on the board and show the game over display. If the tile is a number not equal to 0, show the number on the clicked tile. If the tile is equal to 0, loop through the whole board looking for revealed tiles and display all revealed tiles.
@@ -345,11 +345,11 @@ POSTCONDITION: The tile clicked on has been revealed, as well as any adjacent ti
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/js/main.js.html#lineNumber147">source</a></span></span>
+      <span data-ice="source"><span><a href="file/js/main.js.html#lineNumber164">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rightClick} from &apos;<span><a href="file/js/main.js.html#lineNumber147">./js/main.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rightClick} from &apos;<span><a href="file/js/main.js.html#lineNumber164">./js/main.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Run when any tile in the game table is right-clicked, places or removes a flag on the tile clicked. Checks if if the game is still happening. If not, return null. If so, determine coordinates of the tile clicked using its ID and execute <span>flagTile</span>. If <span>flagTile</span> returns true, change the space inside the tile to be a flag. If <span>flagTile</span> returns false, remove the flag inside the tile. If <span>flagTile</span> returns null, return null. Then check if the game was won (all flags placed on all mines). If so, show the winner display.
