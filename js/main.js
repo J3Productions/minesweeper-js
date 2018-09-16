@@ -125,6 +125,9 @@ export function leftClick() {
 			}
 		}
 	}
+	
+	flags = game.minesTotal - game.numFlags;
+	document.getElementById("flagsPlaced").innerHTML = flags;
 }
 
 export function rightClick() {
@@ -142,15 +145,16 @@ export function rightClick() {
 	
 	if (flagTile == true) {
 		clicked.innerHTML = "&#9873;";
-		flags++;
 	}
 	else if (flagTile == false) {
 		clicked.innerHTML = "";
-		flags--;
 	}
 	else {
 		return null;
 	}
+	
+	flags = game.minesTotal - game.numFlags;
+	document.getElementById("flagsPlaced").innerHTML = flags;
 	
 	if (game.winner == true) {
 		$(function(){
@@ -158,5 +162,4 @@ export function rightClick() {
 		});
 	}
 	
-	document.getElementById("flagsPlaced").innerHTML = flags;
 }

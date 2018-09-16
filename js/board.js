@@ -47,7 +47,7 @@ export class Board {
 
         /** Variable to keep track of  number of  flags.
 		*@type {number}*/
-        this.numFlags = numMines;
+        this.numFlags = this.minesTotal;
 
         /** Variable to keep track of tiles without a mine in it.
 		*@type {number}*/
@@ -399,18 +399,16 @@ export class Board {
     clickReveal(i, j) {
 
         let self = this;
-		
-		//Prevent the user from revealing the tile if it is flagged or if it is already revealed
-		if (this.arr[i][j].flagged == true || this.arr[i][j].revealed == true) {
-			return null;
-		}
 
         if (this.arr[i][j].getMine() == true) {
             this.arr[i][j].revealed = true;
             this.loser = true;             //If the click by player and it was a bomb, the game is over.
         }
         else {
-
+			if (this.arr[i][j].flagged == true) {
+				this.setFlag(i, j);
+			}
+			
             if (this.arr[i][j].adjNum > 0 && this.arr[i][j].adjNum < 9) {
                 if (this.arr[i][j].revealed == false) {
                     if(this.arr[i][j].flagged == true)
