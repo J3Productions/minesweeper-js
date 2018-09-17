@@ -27,25 +27,25 @@ export function checkMinesInput() {
 }
 
 /**
- * Run when start/restart button is pressed, generates a game board if input conditions are met. Checks the validitiy of every input field (non-empty and within their respective ranges). If they are all valid, a new {@link Board} object is created and stored in game. The Board then plants the mines and all adjacent numbers calling {@link plantMine} and {@link plantAdjNum}. The game board area is then cleared and a table is created by creating element nodes of type TD, attaching a numeric ID to each one. These are then appended into TR nodes, which are then appended to the TABLE node in index.html. The status display is then unhidden and the start button is changed to a reset button. If all input fields are not valid, display an alert and force the user to try their inputs again.
+ * Run when start/Reset button is pressed, generates a game board if input conditions are met. Checks the validitiy of every input field (non-empty and within their respective ranges). If they are all valid, a new {@link Board} object is created and stored in game. The Board then plants the mines and all adjacent numbers calling {@link plantMine} and {@link plantAdjNum}. The game board area is then cleared and a table is created by creating element nodes of type TD, attaching a numeric ID to each one. These are then appended into TR nodes, which are then appended to the TABLE node in index.html. The status display is then unhidden and the start button is changed to a reset button. If all input fields are not valid, display an alert and force the user to try their inputs again.
  * PRECONDITION: startButton has been clicked by the user and boardLength, boardHeight, and minesInput are valid inputs.
- * POSTCONDITION: game is now a Board with mines and adjacent numbers planted, game is represented as a table, startButton is now red and reads Restart, and flags/mines stat bar is now shown.
+ * POSTCONDITION: game is now a Board with mines and adjacent numbers planted, game is represented as a table, startButton is now red and reads Reset, and flags/mines stat bar is now shown.
  */
 export function boardGen() {
 	let lengthField = document.getElementById("boardLength");
 	let heightField = document.getElementById("boardHeight");
 	let minesField = document.getElementById("minesInput");
-	
+
 	lengthField.setAttribute("class", "form-control");
 	heightField.setAttribute("class", "form-control");
 	minesField.setAttribute("class", "form-control");
-    
+
 
 	if (lengthField.validity.valid == true && heightField.validity.valid == true && minesField.validity.valid == true) {
 		let length = lengthField.value;
 		let height = heightField.value;
 		let mines = minesField.value;
-        
+
         game = new Board(mines, height, length);
         game.plantMine();
         game.plantAdjNum();
@@ -67,7 +67,7 @@ export function boardGen() {
 
 		document.getElementById("status").hidden = false;
 		document.getElementById("startButton").setAttribute("class", "btn btn-danger btn-lg btn-block");
-		document.getElementById("startButton").innerHTML = "Restart";
+		document.getElementById("startButton").innerHTML = "Reset";
 		document.getElementById("flagsPlaced").innerHTML = 0;
 		document.getElementById("minesOnBoard").innerHTML = mines;
 	}
@@ -103,7 +103,7 @@ export function leftClick(clicked) {
 		});
 		return null;
 	}
-	
+
 	//[row, column]
 	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	if (game.isTileRevealed(coord[0], coord[1]) == false)  {
@@ -112,7 +112,7 @@ export function leftClick(clicked) {
 	else {
 		return null;
 	}
-	
+
 	if (game.loser == true) {
 		game.showAllMine();
 		clicked.setAttribute("style", "color: red;");
@@ -149,7 +149,7 @@ export function leftClick(clicked) {
 			}
 		}
 	}
-	
+
 	flags = game.minesTotal - game.numFlags;
 	document.getElementById("flagsPlaced").innerHTML = flags;
 }
@@ -170,11 +170,11 @@ export function rightClick(clicked) {
 		});
 		return null;
 	}
-	
+
 	//[row, column]
 	let coord = [Math.floor(cellID / game.columns), (cellID % game.columns)];
 	let flagTile = game.setFlag(coord[0], coord[1]);
-	
+
 	if (flagTile == true) {
 		clicked.innerHTML = "&#9873;";
 	}
@@ -184,14 +184,14 @@ export function rightClick(clicked) {
 	else {
 		return null;
 	}
-	
+
 	flags = game.minesTotal - game.numFlags;
 	document.getElementById("flagsPlaced").innerHTML = flags;
-	
+
 	if (game.winner == true) {
 		$(function(){
 			$('#winner').modal('show');
 		});
 	}
-	
+
 }
