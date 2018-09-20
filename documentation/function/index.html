@@ -64,7 +64,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Run when start/restart button is pressed, generates a game board if input conditions are met.</p>
+        <div data-ice="description"><p>Run when start/Reset button is pressed, generates a game board if input conditions are met.</p>
 </div>
       </div>
     </td>
@@ -184,9 +184,9 @@
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {boardGen} from &apos;<span><a href="file/js/main.js.html#lineNumber34">./js/main.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Run when start/restart button is pressed, generates a game board if input conditions are met. Checks the validitiy of every input field (non-empty and within their respective ranges). If they are all valid, a new <span><a href="class/js/board.js~Board.html">Board</a></span> object is created and stored in game. The Board then plants the mines and all adjacent numbers calling <span><a href="class/js/board.js~Board.html#instance-method-plantMine">plantMine</a></span> and <span><a href="class/js/board.js~Board.html#instance-method-plantAdjNum">plantAdjNum</a></span>. The game board area is then cleared and a table is created by creating element nodes of type TD, attaching a numeric ID to each one. These are then appended into TR nodes, which are then appended to the TABLE node in index.html. The status display is then unhidden and the start button is changed to a reset button. If all input fields are not valid, display an alert and force the user to try their inputs again.
+  <div data-ice="description"><p>Run when start/Reset button is pressed, generates a game board if input conditions are met. Checks the validitiy of every input field (non-empty and within their respective ranges). If they are all valid, a new <span><a href="class/js/board.js~Board.html">Board</a></span> object is created and stored in game. The Board then plants the mines and all adjacent numbers calling <span><a href="class/js/board.js~Board.html#instance-method-plantMine">plantMine</a></span> and <span><a href="class/js/board.js~Board.html#instance-method-plantAdjNum">plantAdjNum</a></span>. The game board area is then cleared and a table is created by creating element nodes of type TD, attaching a numeric ID to each one. These are then appended into TR nodes, which are then appended to the TABLE node in index.html. The status display is then unhidden and the start button is changed to a reset button. If all input fields are not valid, display an alert and force the user to try their inputs again.
 PRECONDITION: startButton has been clicked by the user and boardLength, boardHeight, and minesInput are valid inputs.
-POSTCONDITION: game is now a Board with mines and adjacent numbers planted, game is represented as a table, startButton is now red and reads Restart, and flags/mines stat bar is now shown.</p>
+POSTCONDITION: game is now a Board with mines and adjacent numbers planted, game is represented as a table, startButton is now red and reads Reset, and flags/mines stat bar is now shown.</p>
 </div>
 
   
