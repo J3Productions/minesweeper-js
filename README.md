@@ -8,7 +8,7 @@ To play the game, enter a number between 2 and 45 for the dimensions of your Min
 
 ## Authors
 
-**[J3 Productions](https://github.com/J3Productions)** - [Jielong Cong](https://github.com/JielongCong), [Jacob Parnell](https://github.com/compoundfraxure), [Jason Purinton](https://github.com/JasonPurinton)
+**[J3 Productions](https://github.com/J3Productions)** - [Jielong Cong](https://github.com/JielongCong), [Jacob Parnell](https://github.com/jake-penguins), [Jason Purinton](https://github.com/JasonPurinton)
 
 #### [Team Log and Retrospective](https://j3productions.github.io/minesweeper-js/documentation/j3-meeting-log-retrospective.docx)
 
